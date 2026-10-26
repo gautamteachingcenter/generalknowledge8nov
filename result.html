@@ -2,7 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <!-- 🖥️ FORCE DESKTOP MODE ON MOBILE DEVICES -->
+    <meta name="viewport" id="desktopViewport" content="width=1200, user-scalable=yes">
+    <script>
+        (function() {
+            function enforceDesktopViewport() {
+                var vp = document.getElementById("desktopViewport");
+                if (vp && window.screen && window.screen.width < 1200) {
+                    var scale = window.screen.width / 1200;
+                    vp.setAttribute(
+                        "content",
+                        "width=1200, initial-scale=" + scale.toFixed(3) + ", minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes"
+                    );
+                }
+            }
+            enforceDesktopViewport();
+            window.addEventListener("orientationchange", function() {
+                setTimeout(enforceDesktopViewport, 150);
+            });
+        })();
+    </script>
     <meta name="referrer" content="no-referrer">
     <meta name="theme-color" content="#0369a1">
     <title>Official Merit List & Board Rank Gazette | Gautam Teaching Centre</title>
@@ -13,6 +32,14 @@
     <link rel="stylesheet" href="style.css?v=9.0" onerror="this.onerror=null;this.href='css/style.css';">
 
     <style>
+        html, body {
+            min-width: 1180px !important;
+            overflow-x: auto !important;
+        }
+        .portal-header, .merit-toolbar, .certificate-canvas {
+            width: 1120px !important;
+            max-width: 1120px !important;
+        }
         .certificate-canvas {
             width: 100%;
             max-width: 1100px;
@@ -31,9 +58,9 @@
         .badge-pass { color: #059669; font-weight: 900; background: #ecfdf5; padding: 2px 8px; border-radius: 4px; border: 1px solid #a7f3d0; }
         .badge-fail { color: #dc2626; font-weight: 900; background: #fef2f2; padding: 2px 8px; border-radius: 4px; border: 1px solid #fecaca; }
         @media print {
-            body { background: #ffffff !important; padding: 0 !important; color: #000 !important; }
+            html, body { min-width: 0 !important; background: #ffffff !important; padding: 0 !important; color: #000 !important; }
             .portal-header, .merit-toolbar, #meritToast, .no-print { display: none !important; }
-            .certificate-canvas { box-shadow: none !important; max-width: 100% !important; padding: 0 !important; }
+            .certificate-canvas { box-shadow: none !important; width: 100% !important; max-width: 100% !important; padding: 0 !important; }
             @page { size: A4 landscape; margin: 6mm 6mm; }
         }
     </style>
