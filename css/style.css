@@ -1,0 +1,1055 @@
+/* ==========================================================================
+🎓 GAUTAM TEACHING CENTRE (GTC) - MASTER CBT PORTAL STYLESHEET
+File: style.css (Also referenced as css/style.css)
+Specification: Universal Shared Stylesheet across All Portal Stages
+Compatible: index.html, auth.html, login.html, test.html,
+response-sheet.html, result.html, admin-monitor.html
+========================================================================== */
+
+/* ==========================================================================
+🎨 1. UNIVERSAL DESIGN TOKENS & SYSTEM VARIABLES
+========================================================================== */
+:root {
+/* Brand Primary Palette (Ocean Sky) */
+--primary: #0284c7;
+--primary-deep: #0369a1;
+--primary-light: #38bdf8;
+--primary-soft: #f0f9ff;
+--primary-border: #bae6fd;
+--primary-glow: rgba(2, 132, 199, 0.22);
+
+/* Royal Indigo Accent */
+--accent: #4f46e5;
+--accent-deep: #3730a3;
+--accent-soft: #eef2ff;
+--accent-border: #c7d2fe;
+
+/* Royal Gold / Merit Amber */
+--royal-gold: #d97706;
+--royal-gold-light: #fef3c7;
+--royal-gold-border: #fde68a;
+--royal-gold-deep: #92400e;
+
+/* Neutral Surfaces & Backgrounds */
+--bg-page: #f8fafc;
+--bg-dark: #0f172a;
+--surface: #ffffff;
+--surface-muted: #f8fafc;
+--surface-hover: #f1f5f9;
+
+/* Structural Borders */
+--border-light: #e2e8f0;
+--border-card: #cbd5e1;
+--border-focus: #0284c7;
+
+/* Typography Hierarchy */
+--text-heading: #0f172a;
+--text-body: #334155;
+--text-muted: #64748b;
+--text-inverted: #ffffff;
+
+/* Exam Status: Answered / Success (Emerald Green) */
+--success: #10b981;
+--success-deep: #059669;
+--success-bg: #ecfdf5;
+--success-border: #a7f3d0;
+--success-glow: rgba(16, 185, 129, 0.24);
+
+/* Exam Status: Warning / Alert (Warm Amber) */
+--warning: #f59e0b;
+--warning-deep: #b45309;
+--warning-bg: #fffbeb;
+--warning-border: #fde68a;
+
+/* Exam Status: Danger / Negative / Siren (Crimson Red) */
+--danger: #ef4444;
+--danger-deep: #dc2626;
+--danger-bg: #fef2f2;
+--danger-border: #fecaca;
+--danger-glow: rgba(239, 68, 68, 0.28);
+
+/* Exam Status: Mark for Review (Purple) */
+--review: #8b5cf6;
+--review-deep: #6d28d9;
+--review-bg: #f5f3ff;
+--review-border: #ddd6fe;
+
+/* Elevation Radii */
+--radius-xs: 6px;
+--radius-sm: 10px;
+--radius-md: 14px;
+--radius-lg: 20px;
+--radius-xl: 26px;
+--radius-full: 9999px;
+
+/* Layered Elevation Box Shadows */
+--shadow-subtle: 0 4px 14px rgba(15, 23, 42, 0.04);
+--shadow-card: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+--shadow-float: 0 14px 34px -8px rgba(2, 132, 199, 0.35);
+--shadow-modal: 0 30px 70px -15px rgba(15, 23, 42, 0.35);
+
+/* Transitions & Typography Families */
+--transition-smooth: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+--font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+--font-display: 'Outfit', sans-serif;
+--font-hindi: 'Mukta', sans-serif;
+--font-mono: 'JetBrains Mono', monospace;
+
+
+}
+
+/* ==========================================================================
+🛡️ 2. GLOBAL RESET & BASE VIEWPORT LOCK
+========================================================================== */
+*, *::before, *::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: var(--font-main);
+-webkit-tap-highlight-color: transparent;
+-webkit-font-smoothing: antialiased;
+text-rendering: optimizeLegibility;
+}
+
+html {
+scroll-behavior: smooth;
+font-size: 15px;
+}
+
+html, body {
+overscroll-behavior-y: contain !important;
+overscroll-behavior: none !important;
+touch-action: pan-x pan-y;
+}
+
+body {
+background-color: var(--bg-page);
+min-height: 100vh;
+color: var(--text-heading);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+position: relative;
+overflow-x: hidden;
+padding: 16px 14px 44px;
+}
+
+/* ==========================================================================
+✨ 3. AMBIENT ATMOSPHERIC BACKGROUND LIGHTING
+========================================================================== */
+.ambient-glow-left {
+position: fixed;
+width: 500px;
+height: 500px;
+background: radial-gradient(circle, rgba(199, 210, 254, 0.45) 0%, rgba(248, 250, 252, 0) 70%);
+top: -120px;
+left: -120px;
+border-radius: 50%;
+filter: blur(85px);
+z-index: 0;
+pointer-events: none;
+}
+
+.ambient-glow-right {
+position: fixed;
+width: 460px;
+height: 460px;
+background: radial-gradient(circle, rgba(186, 230, 253, 0.5) 0%, rgba(248, 250, 252, 0) 70%);
+bottom: -90px;
+right: -90px;
+border-radius: 50%;
+filter: blur(85px);
+z-index: 0;
+pointer-events: none;
+}
+
+/* ==========================================================================
+🏛️ 4. PORTAL COMMAND HEADER & BRANDING BAR
+========================================================================== */
+.portal-header {
+width: 100%;
+max-width: 1080px;
+background: rgba(255, 255, 255, 0.94);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+border: 1.5px solid var(--border-light);
+border-radius: var(--radius-lg);
+padding: 12px 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: var(--shadow-subtle);
+margin-bottom: 20px;
+position: relative;
+z-index: 20;
+flex-wrap: wrap;
+gap: 12px;
+}
+
+.brand-cluster {
+display: flex;
+align-items: center;
+gap: 12px;
+user-select: none;
+}
+
+.brand-logo-disc {
+width: 44px;
+height: 44px;
+background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+border: 1.8px solid var(--primary-border);
+border-radius: var(--radius-md);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 22px;
+box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+transition: var(--transition-smooth);
+cursor: pointer;
+position: relative;
+}
+
+.brand-logo-disc:hover {
+transform: scale(1.05) rotate(-3deg);
+border-color: var(--primary);
+}
+
+.brand-logo-disc:active {
+transform: scale(0.95);
+}
+
+.brand-taglines h1,
+.brand-taglines h2 {
+font-family: var(--font-display);
+font-size: 16.5px;
+font-weight: 900;
+letter-spacing: 0.5px;
+color: var(--text-heading);
+text-transform: uppercase;
+line-height: 1.15;
+}
+
+.brand-taglines p {
+font-size: 10.5px;
+color: var(--primary-deep);
+font-weight: 800;
+letter-spacing: 0.7px;
+text-transform: uppercase;
+}
+
+/* Header Action Clusters & Status Pills */
+.header-actions-cluster {
+display: flex;
+align-items: center;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+.live-clock-pill {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: var(--surface-muted);
+border: 1.2px solid var(--border-card);
+padding: 6px 12px;
+border-radius: var(--radius-full);
+font-family: var(--font-mono);
+font-size: 11.5px;
+font-weight: 700;
+color: var(--text-body);
+}
+
+.status-indicator-pill {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+background: var(--success-bg);
+border: 1.5px solid var(--success-border);
+color: var(--success-deep);
+padding: 6px 14px;
+border-radius: var(--radius-full);
+font-size: 11px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.status-dot-pulse {
+width: 8px;
+height: 8px;
+background: #10b981;
+border-radius: 50%;
+box-shadow: 0 0 10px rgba(16, 185, 129, 0.8);
+animation: pulseAura 1.6s infinite ease-in-out;
+}
+
+.proctor-active-badge {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+background: var(--danger-bg);
+border: 1.5px solid var(--danger-border);
+color: var(--danger-deep);
+padding: 6px 14px;
+border-radius: var(--radius-full);
+font-size: 11px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 0.4px;
+}
+
+.pulse-dot-red {
+width: 8px;
+height: 8px;
+border-radius: 50%;
+background: #ef4444;
+box-shadow: 0 0 10px #ef4444;
+animation: pulseAura 1.4s infinite ease-in-out;
+}
+
+@keyframes pulseAura {
+0%, 100% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.35); opacity: 0.45; }
+}
+
+.step-pill-indicator {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: var(--accent-soft);
+border: 1.5px solid var(--accent-border);
+color: var(--accent);
+padding: 5px 12px;
+border-radius: var(--radius-full);
+font-size: 11px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+🚀 5. MULTI-STAGE PROGRESS STEPPER (Auth -> Login -> Exam Room)
+========================================================================== */
+.progress-track-wrapper {
+width: 100%;
+max-width: 500px;
+margin-bottom: 20px;
+position: relative;
+z-index: 10;
+padding: 0 4px;
+}
+
+.progress-track {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.track-node {
+display: flex;
+align-items: center;
+gap: 7px;
+font-size: 11.5px;
+font-weight: 800;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.4px;
+user-select: none;
+}
+
+.track-node.active { color: var(--primary); }
+.track-node.done { color: var(--success); }
+
+.node-bubble {
+width: 26px;
+height: 26px;
+border-radius: var(--radius-full);
+display: flex;
+align-items: center;
+justify-content: center;
+background: #ffffff;
+border: 1.8px solid var(--border-card);
+font-family: var(--font-mono);
+font-size: 11.5px;
+font-weight: 800;
+color: var(--text-muted);
+transition: var(--transition-smooth);
+}
+
+.track-node.done .node-bubble {
+background: var(--success-bg);
+border-color: var(--success-border);
+color: var(--success);
+}
+
+.track-node.active .node-bubble {
+background: var(--primary);
+border-color: var(--primary);
+color: #ffffff;
+box-shadow: 0 0 0 3.5px var(--primary-glow);
+}
+
+.track-connector-line {
+flex: 1;
+height: 2.5px;
+background: var(--border-card);
+margin: 0 10px;
+border-radius: var(--radius-full);
+position: relative;
+overflow: hidden;
+}
+
+.track-connector-line.filled {
+background: var(--success);
+}
+
+/* ==========================================================================
+📦 6. CARDS, SURFACES & HERO CONTAINERS
+========================================================================== */
+.glass-card,
+.auth-card,
+.login-card,
+.search-card,
+.candidate-meta-card,
+.section-box {
+background: var(--surface);
+border: 1.5px solid var(--border-light);
+border-radius: var(--radius-xl);
+padding: 26px;
+box-shadow: var(--shadow-card);
+position: relative;
+z-index: 10;
+transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-card::before,
+.login-card::before,
+.glass-card::before,
+.search-card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 15%;
+right: 15%;
+height: 3.5px;
+background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+/* Auth / Login Specific Card Dimensions */
+.auth-card,
+.login-card {
+width: 100%;
+max-width: 500px;
+}
+
+.icon-crest-wrap {
+width: 64px;
+height: 64px;
+background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+border: 1.8px solid var(--primary-border);
+border-radius: var(--radius-lg);
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto 14px;
+font-size: 30px;
+box-shadow: 0 8px 24px -6px rgba(2, 132, 199, 0.22);
+}
+
+/* 4-Quad / Summary Metrics Grids */
+.metrics-quad-grid,
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 12px;
+margin-bottom: 20px;
+}
+
+.metric-cell,
+.stat-card {
+background: var(--surface-muted);
+border: 1.5px solid var(--border-light);
+border-radius: var(--radius-md);
+padding: 14px 10px;
+text-align: center;
+transition: var(--transition-smooth);
+}
+
+.metric-cell:hover,
+.stat-card:hover {
+transform: translateY(-2px);
+background: #ffffff;
+border-color: var(--primary-border);
+box-shadow: 0 6px 16px -4px var(--primary-glow);
+}
+
+.metric-value,
+.stat-val {
+font-family: var(--font-display);
+font-size: 26px;
+font-weight: 900;
+line-height: 1.1;
+margin-bottom: 3px;
+}
+
+.metric-label,
+.stat-label {
+font-size: 11px;
+font-weight: 800;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+🔘 7. FORM INPUTS, SELECT DROPDOWNS & KEYPAD CONTROLS
+========================================================================== */
+.form-group {
+margin-bottom: 16px;
+text-align: left;
+}
+
+.field-label {
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 11.5px;
+font-weight: 800;
+color: #475569;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+margin-bottom: 6px;
+}
+
+.field-label .required-dot {
+color: var(--danger);
+}
+
+.input-box-wrap {
+position: relative;
+display: flex;
+align-items: center;
+}
+
+.input-icon-lead {
+position: absolute;
+left: 14px;
+font-size: 17px;
+color: var(--text-muted);
+pointer-events: none;
+}
+
+.field-input,
+.search-input,
+.input-field {
+width: 100%;
+height: 52px;
+padding: 12px 16px;
+background: #ffffff;
+border: 1.8px solid var(--border-card);
+border-radius: var(--radius-md);
+font-size: 14.5px;
+font-weight: 700;
+color: var(--text-heading);
+outline: none;
+transition: var(--transition-smooth);
+box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.field-input.has-icon {
+padding-left: 42px;
+}
+
+.field-input:focus,
+.search-input:focus,
+.input-field:focus {
+border-color: var(--primary);
+background: #ffffff;
+box-shadow: 0 0 0 3.5px var(--primary-glow);
+}
+
+.field-input.mono-field,
+.code-input-field {
+font-family: var(--font-mono);
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+
+/* Select Dropdown Styling */
+.select-wrapper {
+position: relative;
+width: 100%;
+}
+
+.field-select {
+width: 100%;
+height: 52px;
+padding: 12px 42px 12px 42px;
+background: #ffffff;
+border: 1.8px solid var(--border-card);
+border-radius: var(--radius-md);
+font-size: 14px;
+font-weight: 700;
+color: var(--text-heading);
+outline: none;
+cursor: pointer;
+appearance: none;
+-webkit-appearance: none;
+transition: var(--transition-smooth);
+box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+}
+
+.field-select:focus {
+border-color: var(--primary);
+box-shadow: 0 0 0 3.5px var(--primary-glow);
+}
+
+.select-chevron {
+position: absolute;
+right: 16px;
+top: 50%;
+transform: translateY(-50%);
+pointer-events: none;
+color: var(--primary-deep);
+font-size: 12px;
+font-weight: 900;
+}
+
+/* Quick Touch Keypad Grid (for PIN/Auth entry) */
+.quick-keypad-drawer {
+margin-top: 18px;
+background: var(--surface-muted);
+border: 1.2px solid var(--border-light);
+border-radius: var(--radius-md);
+padding: 12px;
+}
+
+.keypad-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+font-size: 11px;
+font-weight: 800;
+color: var(--text-muted);
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.quick-keys-grid {
+display: grid;
+grid-template-columns: repeat(6, 1fr);
+gap: 6px;
+}
+
+.key-btn {
+height: 38px;
+background: #ffffff;
+border: 1.2px solid var(--border-card);
+border-radius: var(--radius-xs);
+color: var(--text-heading);
+font-family: var(--font-mono);
+font-size: 13px;
+font-weight: 800;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: var(--transition-smooth);
+user-select: none;
+}
+
+.key-btn:hover {
+background: var(--primary-soft);
+border-color: var(--primary);
+color: var(--primary-deep);
+transform: translateY(-1px);
+}
+
+.key-btn:active {
+transform: scale(0.92);
+}
+
+.key-btn.action-key {
+background: #e2e8f0;
+color: var(--text-body);
+grid-column: span 2;
+font-size: 11px;
+font-family: var(--font-main);
+}
+
+/* ==========================================================================
+🎛️ 8. BUTTONS & INTERACTIVE ACTION CHIPS
+========================================================================== */
+.btn-primary-launch,
+.btn-launch-exam,
+.btn-verify-access,
+.btn-launch-room {
+width: 100%;
+min-height: 54px;
+background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+color: #ffffff;
+border: none;
+border-radius: var(--radius-md);
+font-size: 15px;
+font-weight: 800;
+letter-spacing: 0.6px;
+text-transform: uppercase;
+cursor: pointer;
+box-shadow: var(--shadow-float);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+text-decoration: none;
+transition: var(--transition-smooth);
+position: relative;
+overflow: hidden;
+user-select: none;
+}
+
+.btn-primary-launch::after,
+.btn-launch-exam::after,
+.btn-verify-access::after,
+.btn-launch-room::after {
+content: '';
+position: absolute;
+top: 0; left: -100%; width: 60%; height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+transform: skewX(-25deg);
+animation: shineSweep 4s infinite ease-in-out;
+}
+
+@keyframes shineSweep {
+0% { left: -100%; }
+20% { left: 140%; }
+100% { left: 140%; }
+}
+
+.btn-primary-launch:hover:not(:disabled),
+.btn-launch-exam:hover:not(:disabled),
+.btn-verify-access:hover:not(:disabled),
+.btn-launch-room:hover:not(:disabled) {
+transform: translateY(-2px);
+box-shadow: 0 16px 36px -6px rgba(37, 99, 235, 0.55);
+}
+
+.btn-primary-launch:disabled,
+.btn-launch-exam:disabled,
+.btn-verify-access:disabled,
+.btn-launch-room:disabled {
+opacity: 0.65;
+cursor: not-allowed;
+transform: none !important;
+box-shadow: none !important;
+}
+
+/* Action Chips & Toolbar Pills */
+.pill-btn,
+.action-chip-btn {
+background: #ffffff;
+border: 1.4px solid var(--border-card);
+color: var(--text-body);
+padding: 7px 13px;
+border-radius: var(--radius-sm);
+font-size: 11.5px;
+font-weight: 800;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+transition: var(--transition-smooth);
+user-select: none;
+text-decoration: none;
+}
+
+.pill-btn:hover,
+.action-chip-btn:hover {
+border-color: var(--primary);
+color: var(--primary-deep);
+background: var(--primary-soft);
+transform: translateY(-1px);
+}
+
+.pill-btn.active {
+background: var(--primary);
+border-color: var(--primary);
+color: #ffffff;
+box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+}
+
+.btn-header-action {
+background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+color: #ffffff;
+border: none;
+padding: 7px 15px;
+border-radius: var(--radius-sm);
+font-size: 12px;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+box-shadow: var(--shadow-float);
+transition: var(--transition-smooth);
+text-decoration: none;
+}
+
+.btn-header-action:hover {
+transform: translateY(-1px);
+box-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.5);
+}
+
+.btn-header-secondary {
+background: var(--surface-muted);
+border: 1.2px solid var(--border-card);
+color: var(--text-body);
+box-shadow: none;
+}
+
+.btn-header-secondary:hover {
+background: var(--primary-soft);
+color: var(--primary-deep);
+border-color: var(--primary);
+}
+
+/* ==========================================================================
+🔒 9. MODAL OVERLAYS, GLASSMORPHISM & DIALOGS
+========================================================================== */
+.modal-overlay {
+position: fixed;
+inset: 0;
+background: rgba(15, 23, 42, 0.78);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+display: none;
+justify-content: center;
+align-items: center;
+padding: 20px;
+z-index: 99999;
+}
+
+.modal-box,
+.modal-glass {
+background: #ffffff;
+border: 1.5px solid var(--border-light);
+border-radius: var(--radius-xl);
+max-width: 460px;
+width: 100%;
+padding: 28px 24px;
+text-align: center;
+box-shadow: var(--shadow-modal);
+position: relative;
+animation: modalFadeIn 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalFadeIn {
+from { opacity: 0; transform: scale(0.92) translateY(12px); }
+to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-pass-input,
+.passcode-input {
+width: 100%;
+padding: 13px;
+background: #f8fafc;
+border: 1.8px solid var(--border-card);
+border-radius: var(--radius-md);
+color: var(--text-heading);
+font-family: var(--font-mono);
+font-size: 15px;
+text-align: center;
+font-weight: 800;
+letter-spacing: 3px;
+outline: none;
+box-sizing: border-box;
+margin-bottom: 8px;
+text-transform: uppercase;
+}
+
+.modal-pass-input:focus,
+.passcode-input:focus {
+border-color: var(--primary);
+background: #ffffff;
+box-shadow: 0 0 0 3.5px var(--primary-glow);
+}
+
+.modal-err-msg {
+color: var(--danger-deep);
+background: var(--danger-bg);
+border: 1px solid var(--danger-border);
+padding: 7px 12px;
+border-radius: var(--radius-sm);
+font-size: 12px;
+font-weight: 700;
+margin-bottom: 14px;
+display: none;
+}
+
+/* Shake Animation for Input Validation Errors */
+.shake-animation {
+animation: shakeHard 0.42s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shakeHard {
+10%, 90% { transform: translate3d(-3px, 0, 0); }
+20%, 80% { transform: translate3d(5px, 0, 0); }
+30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* ==========================================================================
+⏳ 10. LOADING SPINNERS & FLOATING TOASTS
+========================================================================== */
+#loadingOverlay {
+position: fixed;
+inset: 0;
+background: rgba(255, 255, 255, 0.96);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+display: none;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+z-index: 99998;
+transition: opacity 0.25s ease;
+}
+
+.spinner,
+.spinner-disc {
+width: 48px;
+height: 48px;
+border: 4px solid var(--border-light);
+border-top: 4px solid var(--primary);
+border-radius: 50%;
+animation: spinCircle 0.85s linear infinite;
+margin-bottom: 14px;
+}
+
+@keyframes spinCircle {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+
+#loadingText {
+color: var(--text-heading);
+font-size: 14.5px;
+font-weight: 800;
+letter-spacing: 0.3px;
+text-align: center;
+padding: 0 20px;
+}
+
+/* Floating Status Toasts */
+#portalToast,
+#authToast,
+#loginToast,
+#sheetToast,
+#meritToast,
+#statusNotice,
+#cbtToast {
+position: fixed;
+bottom: 26px;
+background: #0f172a;
+color: #ffffff;
+padding: 11px 22px;
+border-radius: var(--radius-full);
+font-size: 12.5px;
+font-weight: 700;
+z-index: 100002;
+display: none;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+animation: toastPop 0.25s ease;
+}
+
+@keyframes toastPop {
+from { transform: translateY(15px); opacity: 0; }
+to { transform: translateY(0); opacity: 1; }
+}
+
+/* ==========================================================================
+📱 11. ADVANCED RESPONSIVE ADAPTATIONS (<768px, <580px)
+========================================================================== */
+@media (max-width: 768px) {
+body {
+padding: 10px 10px 40px;
+}
+
+.portal-header {
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+}
+
+.brand-taglines h1,
+.brand-taglines h2 {
+    font-size: 14.5px;
+}
+
+.live-clock-pill {
+    display: none; /* Conserve space on smaller screens */
+}
+
+.metrics-quad-grid,
+.stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.metric-cell,
+.stat-card {
+    padding: 10px 6px;
+}
+
+.metric-value,
+.stat-val {
+    font-size: 20px;
+}
+
+.glass-card,
+.auth-card,
+.login-card,
+.search-card {
+    padding: 20px 16px;
+    border-radius: var(--radius-lg);
+}
+
+.field-input,
+.field-select {
+    height: 48px;
+    font-size: 13.5px;
+}
+
+
+}
+
+/* ==========================================================================
+🖨️ 12. CLEAN PRINT MEDIA STYLES (PDF / Marksheet Printing)
+========================================================================== */
+@media print {
+body {
+background: #ffffff !important;
+padding: 0 !important;
+color: #000000 !important;
+}
+
+.ambient-glow-left,
+.ambient-glow-right,
+.portal-header,
+.progress-track-wrapper,
+.filter-toolbar-sticky,
+.search-card,
+.quick-nav-dock,
+#portalToast,
+#authToast,
+#loginToast,
+#sheetToast,
+#meritToast {
+    display: none !important;
+}
+
+
+}

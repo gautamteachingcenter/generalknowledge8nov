@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0369a1">
+    <title>Official Merit List & Board Rank Gazette | Gautam Teaching Centre</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=9.0" onerror="this.onerror=null;this.href='css/style.css';">
+
+    <style>
+        .certificate-canvas {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            position: relative;
+            z-index: 10;
+        }
+        .outer-border { border: 3.5px solid #0369a1; padding: 6px; background: #ffffff; }
+        .inner-border { border: 2px solid #d97706; padding: 24px 28px 20px; position: relative; background: #ffffff; }
+        .gtc-merit-table { width: 100%; border-collapse: collapse; background: #ffffff; min-width: 760px; border: 1.8px solid #0f172a; }
+        .gtc-merit-table th { border: 1.4px solid #0f172a; padding: 9px 8px; font-size: 12px; font-weight: 900; background: #f1f5f9; text-transform: uppercase; text-align: center; }
+        .gtc-merit-table td { border: 1.2px solid #0f172a; padding: 8px 8px; font-size: 12.5px; font-weight: 600; text-align: center; }
+        .badge-pass { color: #059669; font-weight: 900; background: #ecfdf5; padding: 2px 8px; border-radius: 4px; border: 1px solid #a7f3d0; }
+        .badge-fail { color: #dc2626; font-weight: 900; background: #fef2f2; padding: 2px 8px; border-radius: 4px; border: 1px solid #fecaca; }
+        @media print {
+            body { background: #ffffff !important; padding: 0 !important; color: #000 !important; }
+            .portal-header, .merit-toolbar, #meritToast, .no-print { display: none !important; }
+            .certificate-canvas { box-shadow: none !important; max-width: 100% !important; padding: 0 !important; }
+            @page { size: A4 landscape; margin: 6mm 6mm; }
+        }
+    </style>
+</head>
+
+<body style="background-color: #0f172a;">
+
+    <div id="meritToast">Merit notice</div>
+
+    <!-- 🏛️ 1. TOP HEADER -->
+    <header class="portal-header no-print">
+        <div class="brand-cluster">
+            <div class="brand-logo-disc" title="Portal Home" onclick="window.location.href='index.html'">🎓</div>
+            <div class="brand-taglines">
+                <h1>GAUTAM TEACHING CENTRE</h1>
+                <p>EXAMINATION BOARD • LIVE MERIT GAZETTE</p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn-primary-launch" style="min-height: 40px; padding: 6px 14px; font-size: 12px;" onclick="window.print()">
+                <span>🖨️ Print / Save PDF</span>
+            </button>
+            <button type="button" class="btn-primary-launch" style="min-height: 40px; padding: 6px 14px; font-size: 12px; background: #64748b;" onclick="window.location.href='index.html'">
+                <span>Home 🏠</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 🔒 SUNDAY 12:00 PM LOCK NOTICE -->
+    <div id="lockedScreenNotice" class="no-print" style="display: none; width: 100%; max-width: 800px; margin: 20px auto; background: #ffffff; border-radius: 20px; padding: 36px 24px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+        <div style="font-size: 46px; margin-bottom: 12px;">🔒</div>
+        <h2 style="font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 900; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">
+            Official Merit List Under Evaluation
+        </h2>
+        <p style="color: #64748b; font-size: 14px; line-height: 1.6; max-width: 540px; margin: 0 auto 20px; font-weight: 600;">
+            यह आधिकारिक मेरिट सूची हर रविवार दोपहर 12:00 बजे घोषित की जाती है। शिक्षक मास्टर पासवर्ड दर्ज करके अभी देख सकते हैं।
+        </p>
+        <button type="button" class="btn-primary-launch" style="max-width: 260px; margin: 0 auto;" onclick="openAdminModal()">
+            Teacher Authorization 🛡️
+        </button>
+    </div>
+
+    <!-- 🔍 SEARCH & SYNC TOOLBAR -->
+    <nav class="merit-toolbar no-print" id="meritToolbarBox" style="width: 100%; max-width: 1100px; margin-bottom: 16px; background: rgba(255,255,255,0.95); padding: 12px 18px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <input 
+            type="text" 
+            id="meritSearchField" 
+            class="field-input" 
+            style="flex: 1; min-width: 240px; height: 42px;" 
+            placeholder="🔍 Search candidate by name or roll..." 
+            autocomplete="off"
+            value=""
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+            oninput="filterMeritTable()">
+
+        <div style="display: flex; gap: 8px;">
+            <button type="button" class="action-chip-btn" onclick="fetchLiveGoogleSheetMerit()">
+                <span>🔄 Sync Cloud Sheet</span>
+            </button>
+            <button type="button" class="action-chip-btn" onclick="exportToCSV()">
+                <span>📊 Export CSV</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 📜 5. THE OFFICIAL BOARD CERTIFICATE CANVAS (PRINTABLE) -->
+    <main class="certificate-canvas" id="certificateCanvas">
+        <div class="outer-border">
+            <div class="inner-border">
+                
+                <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div style="width: 52px; height: 52px; background: #0f172a; border: 2px solid #f59e0b; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <span style="color: #f59e0b; font-size: 8px;">★</span>
+                        <span style="color: #fde68a; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 900; letter-spacing: 1.5px;">GTC</span>
+                        <span style="color: #f59e0b; font-size: 8px;">★</span>
+                    </div>
+
+                    <h2 style="font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 900; color: #0f172a; margin-top: 6px; text-transform: uppercase;">
+                        GTC Examination Board
+                    </h2>
+                    <h3 style="font-size: 13px; font-weight: 800; color: #334155; margin-top: -2px;">Official Board Evaluation Gazette</h3>
+                    <div style="font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 900; color: #0f172a; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; background: #fef3c7; padding: 2px 14px; border-radius: 4px; border: 1px solid #fde68a;">
+                        GTC ACADEMIC ASSESSMENT RESULT - OFFICIAL MERIT LIST
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; color: #0f172a; margin-top: 14px; border-top: 1.5px dashed #cbd5e1; padding-top: 6px;">
+                    <div>Date of Assessment: <span id="dispExamDateText">Auto-Synced Today</span></div>
+                    <div>Total Candidates Evaluated: <span id="dispTotalCandidatesText">0</span></div>
+                </div>
+
+                <div style="width: 100%; overflow-x: auto; margin-top: 12px;">
+                    <table class="gtc-merit-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 12%;">GTC Rank</th>
+                                <th style="width: 26%;">Student Name</th>
+                                <th style="width: 10%;">Roll No</th>
+                                <th style="width: 10%;">Class</th>
+                                <th style="width: 12%;">Total Score</th>
+                                <th style="width: 16%;">Correct / Wrong</th>
+                                <th style="width: 12%;">Percentage</th>
+                                <th style="width: 12%;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="meritTableBody">
+                            <tr><td colspan="8" style="padding: 24px; text-align: center;">Loading real-time submissions from Google Sheet... ⏳</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 24px; padding-top: 10px;">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <div style="width: 56px; height: 56px; border: 1.8px dashed #ea580c; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fff7ed; color: #c2410c;">
+                            <span style="font-size: 7.5px; font-weight: 900;">GTC EXAM</span>
+                            <span style="font-size: 6px; font-weight: 800;">OFFICIAL SEAL</span>
+                            <span style="font-size: 7.5px; font-weight: 900;">2026</span>
+                        </div>
+                        <span style="font-size: 8px; font-weight: 900; color: #0f172a; margin-top: 3px;">BOARD VERIFIED</span>
+                    </div>
+
+                    <div style="font-size: 8.5px; font-weight: 800; color: #475569; letter-spacing: 0.8px; text-transform: uppercase;">
+                        AUTO-GENERATED FROM OFFICIAL CLOUD SUBMISSIONS • REF-ID: GTC/EVAL/2026
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <div style="border-top: 1.6px solid #0f172a; width: 170px; margin-top: 24px;"></div>
+                        <span style="font-size: 8.5px; font-weight: 900; color: #0f172a; text-transform: uppercase; margin-top: 3px;">
+                            CONTROLLER OF EXAMINATIONS
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- 🔒 TEACHER PASSCODE MODAL (No password leaked) -->
+    <div id="adminBypassModal" class="modal-overlay no-print">
+        <div class="modal-box">
+            <div style="font-size: 36px; margin-bottom: 10px;">🛡️</div>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px;">
+                Teacher Authorization
+            </h3>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; font-weight: 600;">
+                मेरिट लिस्ट अनलॉक करने हेतु शिक्षक का मास्टर पासवर्ड दर्ज करें:
+            </p>
+            <input 
+                type="password" 
+                id="adminPassInput" 
+                placeholder="ENTER MASTER PASSCODE" 
+                class="modal-pass-input" 
+                autocomplete="off"
+                oninput="this.value = this.value.toUpperCase()">
+
+            <div id="adminErr" class="modal-err-msg">❌ अमान्य पासवर्ड! कृपया सही कोड दर्ज करें।</div>
+
+            <div style="display: flex; gap: 10px; margin-top: 12px;">
+                <button type="button" class="btn-primary-launch" style="min-height: 44px; font-size: 13px;" onclick="verifyAdminAccess()">
+                    Unlock & Load 🚀
+                </button>
+                <button type="button" class="btn-primary-launch" style="background: #e2e8f0; color: #334155; box-shadow: none;" onclick="closeAdminModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         🧠 AUTO MERIT GENERATOR ENGINE
+         ========================================================================== -->
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzQysEVoQmSS6w_cEeLYK1g95T16cUT5taIdjXfdDLUsOggqFnVMU5GDrl3C3c-Olvt/exec";
+        const MASTER_KEYS = ["GK9890", "GTC#2000", "GTC@2026", "GK77"];
+        let masterMeritRecords = [];
+
+        function isUnlockedBySchedule() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday
+            const hour = now.getHours();
+            return (day === 0 && hour >= 12);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Force clear search input to block browser auto-fill
+            const meritInput = document.getElementById("meritSearchField");
+            if (meritInput) {
+                meritInput.value = "";
+            }
+
+            const isAllowed = isUnlockedBySchedule() || sessionStorage.getItem("adminUnlockedAll") === "true";
+            if (!isAllowed) {
+                document.getElementById("certificateCanvas").style.display = "none";
+                document.getElementById("meritToolbarBox").style.display = "none";
+                document.getElementById("lockedScreenNotice").style.display = "block";
+            } else {
+                fetchLiveGoogleSheetMerit();
+            }
+        });
+
+        // 🌟 Auto-Generate Merit Ranks from Google Sheet
+        async function fetchLiveGoogleSheetMerit() {
+            const tbody = document.getElementById("meritTableBody");
+            tbody.innerHTML = `<tr><td colspan="8" style="padding: 24px; text-align: center;">Fetching live submissions from Google Sheet... ⏳</td></tr>`;
+
+            try {
+                const res = await fetch(`${SCRIPT_URL}?action=get_active_students&adminPass=GK9890&_t=${Date.now()}`);
+                const data = await res.json();
+
+                if (data && Array.isArray(data.submissions) && data.submissions.length > 0) {
+                    processAndSortMerit(data.submissions);
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="8" style="padding: 24px; text-align: center; color: var(--text-muted); font-weight: 700;">Google Sheet में आज कोई टेस्ट सबमिशन दर्ज नहीं है।</td></tr>`;
+                    document.getElementById("dispTotalCandidatesText").textContent = "0";
+                }
+            } catch (e) {
+                tbody.innerHTML = `<tr><td colspan="8" style="padding: 24px; text-align: center; color: #dc2626;">Google Sheet से कनेक्ट नहीं हो सका। कृपया बाद में प्रयास करें।</td></tr>`;
+            }
+        }
+
+        // 🌟 Smart Percentage Formatter (Converts 0.72 -> 72% & 72 -> 72%)
+        function getNumericPercentage(rawVal, rawScore) {
+            if (rawVal !== undefined && rawVal !== null && rawVal !== "") {
+                const str = String(rawVal).trim();
+                const hasPercentSign = str.includes("%");
+                const num = parseFloat(str.replace(/[^0-9.-]/g, ""));
+                if (!isNaN(num)) {
+                    // Google Sheet stores 72% as 0.72 when read via getValues()
+                    if (!hasPercentSign && num > 0 && num <= 1) {
+                        return Math.round(num * 10000) / 100;
+                    }
+                    return Math.round(num * 100) / 100;
+                }
+            }
+            if (rawScore !== undefined) {
+                const sc = parseFloat(rawScore) || 0;
+                return Math.round((sc / 80) * 10000) / 100;
+            }
+            return 0;
+        }
+
+        function formatCleanPercentage(rawVal, rawScore) {
+            const pct = getNumericPercentage(rawVal, rawScore);
+            return `${pct}%`;
+        }
+
+        function processAndSortMerit(submissions) {
+            // Normalize percentage for every submission
+            submissions.forEach(s => {
+                s.numericPct = getNumericPercentage(s.percentage, s.score);
+                s.percentage = `${s.numericPct}%`;
+            });
+
+            // Sort by Percentage Descending, Score Descending
+            const sorted = [...submissions].sort((a, b) => {
+                if (b.numericPct !== a.numericPct) return b.numericPct - a.numericPct;
+                return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+            });
+
+            // Assign Real Merit Ranks with Ties
+            sorted.forEach((student, idx) => {
+                const curPct = student.numericPct;
+                if (idx > 0) {
+                    const prevPct = sorted[idx - 1].numericPct;
+                    if (curPct === prevPct) {
+                        student.rank = sorted[idx - 1].rank;
+                    } else {
+                        student.rank = idx + 1;
+                    }
+                } else {
+                    student.rank = 1;
+                }
+            });
+
+            masterMeritRecords = sorted;
+            document.getElementById("dispTotalCandidatesText").textContent = sorted.length;
+            renderMeritTable(sorted);
+        }
+
+        function renderMeritTable(records) {
+            const tbody = document.getElementById("meritTableBody");
+            if (!records || records.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="padding: 20px; text-align: center;">कोई छात्र रिकॉर्ड नहीं मिला।</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            records.forEach(s => {
+                const rankNum = s.rank;
+                let rankBadge = `#${rankNum}`;
+                if (rankNum === 1) rankBadge = `🥇 #1`;
+                else if (rankNum === 2) rankBadge = `🥈 #2`;
+                else if (rankNum === 3) rankBadge = `🥉 #3`;
+
+                const isPass = String(s.status || "").toUpperCase().includes("PASS");
+                const statusTag = isPass ? `<span class="badge-pass">PASS</span>` : `<span class="badge-fail">FAIL</span>`;
+
+                html += `
+                    <tr>
+                        <td style="font-weight: 900;">${rankBadge}</td>
+                        <td style="text-align: left; padding-left: 18px; font-weight: 800;">${s.name}</td>
+                        <td style="font-family: 'JetBrains Mono', monospace; font-weight: 800;">${s.roll}</td>
+                        <td style="font-weight: 700;">${s.class}</td>
+                        <td style="font-family: 'Outfit', sans-serif; font-size: 13.5px; font-weight: 900; color: #0369a1;">${s.score}</td>
+                        <td style="font-weight: 700;">${s.correct} / ${s.wrong}</td>
+                        <td style="font-weight: 800;">${s.percentage}</td>
+                        <td>${statusTag}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterMeritTable() {
+            const query = document.getElementById("meritSearchField").value.trim().toLowerCase();
+            const filtered = masterMeritRecords.filter(s => {
+                return String(s.name || "").toLowerCase().includes(query) || String(s.roll || "").toLowerCase().includes(query);
+            });
+            renderMeritTable(filtered);
+        }
+
+        function exportToCSV() {
+            if (!masterMeritRecords || masterMeritRecords.length === 0) {
+                showToast("⚠️ Export के लिए कोई डेटा नहीं है!");
+                return;
+            }
+            let csv = "Rank,Name,Roll,Class,Score,Correct,Wrong,Percentage,Status\r\n";
+            masterMeritRecords.forEach(s => {
+                csv += `${s.rank},"${s.name}","${s.roll}","${s.class}",${s.score},${s.correct},${s.wrong},"${s.percentage}","${s.status}"\r\n`;
+            });
+            const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `GTC_Merit_List_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("✓ CSV Exported Successfully!");
+        }
+
+        function openAdminModal() {
+            document.getElementById("adminErr").style.display = "none";
+            document.getElementById("adminPassInput").value = "";
+            document.getElementById("adminBypassModal").style.display = "flex";
+            setTimeout(() => document.getElementById("adminPassInput").focus(), 150);
+        }
+
+        function closeAdminModal() {
+            document.getElementById("adminBypassModal").style.display = "none";
+        }
+
+        function verifyAdminAccess() {
+            const entered = document.getElementById("adminPassInput").value.trim().toUpperCase();
+            if (MASTER_KEYS.includes(entered)) {
+                sessionStorage.setItem("adminUnlockedAll", "true");
+                closeAdminModal();
+                document.getElementById("lockedScreenNotice").style.display = "none";
+                document.getElementById("certificateCanvas").style.display = "block";
+                document.getElementById("meritToolbarBox").style.display = "flex";
+                fetchLiveGoogleSheetMerit();
+            } else {
+                document.getElementById("adminErr").style.display = "block";
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("meritToast");
+            if (toast) {
+                toast.textContent = msg;
+                toast.style.display = "block";
+                setTimeout(() => { toast.style.display = "none"; }, 3200);
+            }
+        }
+    </script>
+</body>
+</html>

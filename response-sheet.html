@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0369a1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Official Candidate Response Sheet & Evaluation | Gautam Teaching Centre</title>
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- KaTeX for High-Precision Mathematical Rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <style>
+        /* ==========================================================================
+           🎨 DESIGN TOKENS & SYSTEM VARIABLES (NATIONAL ASSESSMENT AESTHETIC)
+           ========================================================================== */
+        :root {
+            --primary: #0284c7;
+            --primary-deep: #0369a1;
+            --primary-light: #38bdf8;
+            --primary-soft: #f0f9ff;
+            --primary-border: #bae6fd;
+            --primary-glow: rgba(2, 132, 199, 0.22);
+
+            --accent: #4f46e5;
+            --accent-deep: #3730a3;
+            --accent-soft: #eef2ff;
+            --accent-border: #c7d2fe;
+
+            --surface: #ffffff;
+            --surface-muted: #f8fafc;
+            --surface-hover: #f1f5f9;
+
+            --border-light: #e2e8f0;
+            --border-card: #cbd5e1;
+            --border-focus: #0284c7;
+
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --text-inverted: #ffffff;
+
+            --success: #10b981;
+            --success-deep: #059669;
+            --success-bg: #ecfdf5;
+            --success-border: #a7f3d0;
+
+            --warning: #f59e0b;
+            --warning-deep: #b45309;
+            --warning-bg: #fffbeb;
+            --warning-border: #fde68a;
+
+            --danger: #ef4444;
+            --danger-deep: #dc2626;
+            --danger-bg: #fef2f2;
+            --danger-border: #fecaca;
+
+            --review: #8b5cf6;
+            --review-deep: #6d28d9;
+            --review-bg: #f5f3ff;
+            --review-border: #ddd6fe;
+
+            --radius-xs: 6px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+
+            --shadow-subtle: 0 4px 14px rgba(15, 23, 42, 0.04);
+            --shadow-card: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 14px 34px -8px rgba(2, 132, 199, 0.35);
+            --shadow-modal: 0 30px 70px -15px rgba(15, 23, 42, 0.35);
+
+            --transition-smooth: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            --font-hindi: 'Mukta', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* Ambient Reset */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: var(--text-heading);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            overflow-x: hidden;
+            padding: 16px 14px 60px;
+        }
+
+        /* Atmospheric Background Glows */
+        .ambient-glow-left {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(199, 210, 254, 0.42) 0%, rgba(248, 250, 252, 0) 70%);
+            top: -120px;
+            left: -120px;
+            border-radius: 50%;
+            filter: blur(85px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-right {
+            position: fixed;
+            width: 460px;
+            height: 460px;
+            background: radial-gradient(circle, rgba(186, 230, 253, 0.48) 0%, rgba(248, 250, 252, 0) 70%);
+            bottom: -90px;
+            right: -90px;
+            border-radius: 50%;
+            filter: blur(85px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           🏛️ 1. TOP PORTAL COMMAND HEADER
+           ========================================================================== */
+        .portal-header {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 20;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+
+        .brand-logo-disc {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+            border: 1.8px solid var(--primary-border);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.16);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .brand-logo-disc:hover {
+            transform: scale(1.06) rotate(-3deg);
+            border-color: var(--primary);
+        }
+
+        .brand-taglines h1 {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+
+        .brand-taglines p {
+            font-size: 10.5px;
+            color: var(--primary-deep);
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .header-btn-cluster {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-header-action {
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff;
+            border: none;
+            padding: 7px 15px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: var(--shadow-float);
+            transition: var(--transition-smooth);
+            text-decoration: none;
+        }
+
+        .btn-header-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.5);
+        }
+
+        .btn-header-secondary {
+            background: var(--surface-muted);
+            border: 1.2px solid var(--border-card);
+            color: var(--text-body);
+            box-shadow: none;
+        }
+
+        .btn-header-secondary:hover {
+            background: var(--primary-soft);
+            color: var(--primary-deep);
+            border-color: var(--primary);
+        }
+
+        /* ==========================================================================
+           🔒 2. SUNDAY 12:00 PM LOCK NOTICE CARD
+           ========================================================================== */
+        #lockedScreenNotice {
+            width: 100%;
+            max-width: 820px;
+            margin: 24px auto;
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 44px 28px;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .lock-icon-crest {
+            width: 72px;
+            height: 72px;
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 34px;
+            color: #d97706;
+            box-shadow: 0 10px 24px -6px rgba(217, 119, 6, 0.25);
+        }
+
+        .lock-heading {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .lock-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 560px;
+            margin: 0 auto 24px;
+            font-weight: 600;
+        }
+
+        /* ==========================================================================
+           🔍 3. SEARCH & VERIFICATION COMMAND CARD
+           ========================================================================== */
+        .search-card {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--surface);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 22px 24px;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .search-title {
+            font-family: var(--font-display);
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-input-wrap {
+            flex: 1;
+            min-width: 260px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-icon {
+            position: absolute;
+            left: 14px;
+            font-size: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 52px;
+            padding: 12px 14px 12px 44px;
+            background: var(--surface-muted);
+            border: 1.8px solid var(--border-card);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-heading);
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition-smooth);
+        }
+
+        .search-input:focus {
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .btn-search-trigger {
+            min-width: 180px;
+            height: 52px;
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: var(--shadow-float);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-search-trigger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px -6px rgba(37, 99, 235, 0.55);
+        }
+
+        /* ==========================================================================
+           👥 4. MULTI-STUDENT PROFILE SELECTION DRAWER (SAME ROLL MATCHER)
+           ========================================================================== */
+        #candidateProfileDrawer {
+            width: 100%;
+            max-width: 1100px;
+            background: #ffffff;
+            border: 2px solid var(--primary-border);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(2, 132, 199, 0.12);
+            margin-bottom: 24px;
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .drawer-heading-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .drawer-title {
+            font-family: var(--font-display);
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--primary-deep);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .candidates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+        }
+
+        .candidate-profile-card {
+            background: #ffffff;
+            border: 1.8px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .candidate-profile-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-soft);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .prof-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .prof-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prof-meta {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-select-prof {
+            background: var(--primary-soft);
+            border: 1.2px solid var(--primary-border);
+            color: var(--primary-deep);
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 11.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+           📊 5. EXECUTIVE CANDIDATE IDENTITY & SCORECARD
+           ========================================================================== */
+        #mainResponseSheet {
+            width: 100%;
+            max-width: 1100px;
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .candidate-meta-card {
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 24px 26px;
+            box-shadow: var(--shadow-card);
+            margin-bottom: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .candidate-meta-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 3.5px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .meta-top-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .candidate-profile-cluster {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .candidate-avatar {
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+            border: 2px solid var(--primary-border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 6px 16px -4px rgba(2, 132, 199, 0.25);
+        }
+
+        .candidate-name-title {
+            font-family: var(--font-display);
+            font-size: 21px;
+            font-weight: 900;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            line-height: 1.15;
+            margin-bottom: 4px;
+        }
+
+        .candidate-tags-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: var(--radius-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .tag-roll {
+            background: var(--surface-muted);
+            border: 1px solid var(--border-card);
+            color: var(--primary-deep);
+            font-family: var(--font-mono);
+        }
+
+        .tag-class {
+            background: var(--accent-soft);
+            border: 1px solid var(--accent-border);
+            color: var(--accent);
+        }
+
+        .tag-date {
+            background: #f1f5f9;
+            border: 1px solid var(--border-light);
+            color: var(--text-muted);
+        }
+
+        .tag-time {
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: var(--success-deep);
+            font-family: var(--font-mono);
+        }
+
+        /* 4-Point Executive Metrics Quad */
+        .score-quad-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+            border-top: 1.5px dashed var(--border-light);
+            padding-top: 16px;
+        }
+
+        .score-cell {
+            background: var(--surface-muted);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 12px 10px;
+            text-align: center;
+            transition: var(--transition-smooth);
+        }
+
+        .score-cell:hover {
+            transform: translateY(-2px);
+            background: #ffffff;
+            border-color: var(--primary-border);
+            box-shadow: 0 6px 16px -4px var(--primary-glow);
+        }
+
+        .score-val {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 2px;
+        }
+
+        .score-lbl {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Question Filter Toolbar */
+        .filter-toolbar-sticky {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 10px 18px;
+            margin-bottom: 18px;
+            box-shadow: var(--shadow-subtle);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #ffffff;
+            border: 1.2px solid var(--border-card);
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            user-select: none;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
+        }
+
+        /* ==========================================================================
+           📝 6. TCS iON / RAILWAY STANDARD QUESTION RESPONSE CARDS
+           ========================================================================== */
+        .responses-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .q-card {
+            background: #ffffff;
+            border: 1.8px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 22px 24px;
+            box-shadow: var(--shadow-subtle);
+            display: grid;
+            grid-template-columns: 1fr 295px;
+            gap: 20px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .q-card:hover {
+            box-shadow: var(--shadow-card);
+            border-color: var(--border-card);
+        }
+
+        .q-card.status-correct {
+            border-left: 6px solid var(--success);
+        }
+
+        .q-card.status-wrong {
+            border-left: 6px solid var(--danger);
+        }
+
+        .q-card.status-unattempted {
+            border-left: 6px solid #94a3b8;
+        }
+
+        .q-header-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .q-num-badge {
+            font-family: var(--font-display);
+            font-size: 13.5px;
+            font-weight: 900;
+            color: var(--primary-deep);
+            background: var(--primary-soft);
+            border: 1px solid var(--primary-border);
+            padding: 4px 10px;
+            border-radius: var(--radius-xs);
+            text-transform: uppercase;
+        }
+
+        .q-topic-pill {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            background: var(--surface-muted);
+            border: 1px solid var(--border-light);
+            padding: 4px 10px;
+            border-radius: var(--radius-xs);
+        }
+
+        .q-text-body {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-heading);
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .q-options-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .q-opt-item {
+            display: flex;
+            align-items: center;
+            background: var(--surface-muted);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 10px 14px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-body);
+            transition: var(--transition-smooth);
+        }
+
+        .q-opt-item.is-correct-official {
+            background: var(--success-bg) !important;
+            border-color: var(--success) !important;
+            color: var(--success-deep) !important;
+            font-weight: 800;
+        }
+
+        .q-opt-item.is-wrong-chosen {
+            background: var(--danger-bg) !important;
+            border-color: var(--danger) !important;
+            color: var(--danger-deep) !important;
+            font-weight: 800;
+        }
+
+        /* 🌟 Right Meta Action Box in Question Card */
+        .q-status-panel {
+            background: var(--surface-muted);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .status-rows-cluster {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 12.5px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--border-light);
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .status-label {
+            color: var(--text-muted);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .status-val {
+            font-weight: 900;
+            font-family: var(--font-mono);
+        }
+
+        .time-pill-val {
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #0369a1;
+            background: #e0f2fe;
+            border: 1px solid #bae6fd;
+            padding: 2px 8px;
+            border-radius: 5px;
+        }
+
+        .btn-view-solution {
+            width: 100%;
+            min-height: 40px;
+            background: #ffffff;
+            border: 1.5px solid var(--primary);
+            color: var(--primary-deep);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+        }
+
+        .btn-view-solution:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        /* ==========================================================================
+           💡 7. SMART INTERACTIVE BILINGUAL SOLUTION MODAL
+           ========================================================================== */
+        #solutionModal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 99999;
+        }
+
+        .solution-modal-box {
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 28px 24px;
+            box-shadow: var(--shadow-modal);
+            position: relative;
+            animation: modalFadeIn 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.92) translateY(12px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .solution-top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid var(--border-light);
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sol-lang-switch {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-lang-toggle {
+            background: var(--surface-muted);
+            border: 1.2px solid var(--border-card);
+            color: var(--text-body);
+            padding: 5px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 11.5px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-lang-toggle.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .sol-section-card {
+            background: var(--surface-muted);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            margin-bottom: 14px;
+        }
+
+        .sol-sec-title {
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sol-formula-box {
+            background: #ffffff;
+            border: 1.2px solid var(--primary-border);
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--primary-deep);
+            font-weight: 800;
+        }
+
+        .sol-diagram-box {
+            text-align: center;
+            padding: 8px 0;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        /* ==========================================================================
+           🔒 8. MASTER ADMIN BYPASS MODAL
+           ========================================================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 99999;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            max-width: 440px;
+            width: 100%;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-modal);
+            position: relative;
+            animation: modalFadeIn 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-pass-input {
+            width: 100%;
+            padding: 13px;
+            background: #f8fafc;
+            border: 1.8px solid var(--border-card);
+            border-radius: var(--radius-md);
+            color: var(--text-heading);
+            font-family: var(--font-mono);
+            font-size: 15px;
+            text-align: center;
+            font-weight: 800;
+            letter-spacing: 3px;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-pass-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .modal-err-msg {
+            color: var(--danger-deep);
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            padding: 7px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        /* Toast Status */
+        #sheetToast {
+            position: fixed;
+            bottom: 26px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 11px 22px;
+            border-radius: var(--radius-full);
+            font-size: 12.5px;
+            font-weight: 700;
+            z-index: 100000;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            animation: toastPop 0.25s ease;
+        }
+
+        @keyframes toastPop {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Fullscreen Loading Overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99998;
+        }
+
+        .spinner-disc {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--border-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spinCircle 0.85s linear infinite;
+            margin-bottom: 14px;
+        }
+
+        @keyframes spinCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==========================================================================
+           📱 9. ADVANCED MOBILE RESPONSIVE OPTIMIZATIONS
+           ========================================================================== */
+        @media (max-width: 820px) {
+            body {
+                padding: 10px 10px 40px;
+            }
+
+            .portal-header {
+                padding: 10px 14px;
+                border-radius: var(--radius-md);
+            }
+
+            .q-card {
+                grid-template-columns: 1fr;
+            }
+
+            .score-quad-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .meta-top-strip {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ==========================================================================
+           🖨️ 10. PRINT MEDIA STYLES (Clean PDF/Paper Output)
+           ========================================================================== */
+        @media print {
+            body {
+                background: #ffffff !important;
+                padding: 0 !important;
+                color: #000000 !important;
+            }
+
+            .ambient-glow-left,
+            .ambient-glow-right,
+            .portal-header,
+            .search-card,
+            .filter-toolbar-sticky,
+            #candidateProfileDrawer,
+            #loadingOverlay,
+            #sheetToast,
+            .btn-view-solution,
+            .no-print {
+                display: none !important;
+            }
+
+            #mainResponseSheet {
+                display: block !important;
+                max-width: 100% !important;
+            }
+
+            .candidate-meta-card {
+                box-shadow: none !important;
+                border: 1px solid #000 !important;
+            }
+
+            .q-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #000 !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Atmospheric Visual Lights -->
+    <div class="ambient-glow-left"></div>
+    <div class="ambient-glow-right"></div>
+
+    <!-- Notification Toast -->
+    <div id="sheetToast">Notice Message</div>
+
+    <!-- ==========================================================================
+         🏛️ 1. TOP PORTAL COMMAND HEADER
+         ========================================================================== -->
+    <header class="portal-header no-print">
+        <div class="brand-cluster">
+            <div class="brand-logo-disc" title="Portal Home" onclick="window.location.href='index.html'">
+                🎓
+            </div>
+            <div class="brand-taglines">
+                <h1>GAUTAM TEACHING CENTRE</h1>
+                <p>EXAMINATION BOARD • CANDIDATE RESPONSE SHEET</p>
+            </div>
+        </div>
+
+        <div class="header-btn-cluster">
+            <button type="button" class="btn-header-action" onclick="window.print()">
+                <span>🖨️ Print / Save PDF</span>
+            </button>
+            <a href="index.html" class="btn-header-action btn-header-secondary">
+                <span>← Home</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ==========================================================================
+         🔒 2. SUNDAY 12:00 PM LOCK NOTICE SCREEN
+         ========================================================================== -->
+    <div id="lockedScreenNotice" class="no-print">
+        <div class="lock-icon-crest">🔒</div>
+        <h2 class="lock-heading">Official Response Sheet Under Evaluation</h2>
+        <p class="lock-desc">
+            यह आधिकारिक उत्तरपुस्तिका (Candidate Response Sheet) हर रविवार दोपहर 12:00 बजे घोषित की जाती है। शिक्षक मास्टर पासवर्ड दर्ज करके अभी देख सकते हैं।
+        </p>
+        <button type="button" class="btn-header-action" style="min-height: 44px; padding: 0 24px; font-size: 13px;" onclick="openAdminModal()">
+            Teacher Authorization 🛡️
+        </button>
+    </div>
+
+    <!-- ==========================================================================
+         🔍 3. CANDIDATE SEARCH & ROLL LOOKUP CARD
+         ========================================================================== -->
+    <section class="search-card no-print" id="searchCardBox">
+        <div class="search-title-row">
+            <span class="search-title">
+                <span>🔎</span>
+                <span>Search Candidate Examination Record</span>
+            </span>
+            <span style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
+                Cloud Database Connected ⚡
+            </span>
+        </div>
+
+        <div class="search-box-row">
+            <div class="search-input-wrap">
+                <span class="search-input-icon">🏷️</span>
+                <!-- Anti-autofill trap fields -->
+                <input type="text" style="display:none" name="fakeusernameremembered"/>
+                <input type="password" style="display:none" name="fakepasswordremembered"/>
+
+                <input 
+                    type="text" 
+                    id="rollSearchField" 
+                    class="search-input" 
+                    placeholder="ENTER ROLL NUMBER (E.G. 8 OR GTC-101)" 
+                    autocomplete="new-password"
+                    autocorrect="off"
+                    autocapitalize="characters"
+                    spellcheck="false"
+                    onkeydown="if(event.key==='Enter') loadCandidateResponse()">
+            </div>
+
+            <button type="button" class="btn-search-trigger" onclick="loadCandidateResponse()">
+                <span>Load Sheet 📄</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         👥 4. MULTI-STUDENT PROFILE SELECTION DRAWER
+         ========================================================================== -->
+    <section id="candidateProfileDrawer" class="no-print">
+        <div class="drawer-heading-row">
+            <span class="drawer-title">
+                <span>👨‍🎓</span>
+                <span id="drawerTitleText">Select Candidate Profile (Multiple Records Found)</span>
+            </span>
+            <span style="font-size: 11.5px; color: var(--text-muted); font-weight: 700;">
+                Click on your profile to open sheet
+            </span>
+        </div>
+        <div class="candidates-grid" id="candidatesListContainer">
+            <!-- Populated dynamically if multiple candidates have the same roll -->
+        </div>
+    </section>
+
+    <!-- ==========================================================================
+         📊 5. EXECUTIVE CANDIDATE SCORECARD & METRICS
+         ========================================================================== -->
+    <main id="mainResponseSheet">
+        <div class="candidate-meta-card">
+            <div class="meta-top-strip">
+                <div class="candidate-profile-cluster">
+                    <div class="candidate-avatar">👨‍🎓</div>
+                    <div>
+                        <h2 class="candidate-name-title" id="dispStudentName">Candidate Name</h2>
+                        <div class="candidate-tags-row">
+                            <span class="tag-pill tag-roll" id="dispStudentRoll">Roll: --</span>
+                            <span class="tag-pill tag-class" id="dispStudentClass">Class: --</span>
+                            <span class="tag-pill tag-date" id="dispExamDate">Assessment Date: Today</span>
+                            <span class="tag-pill tag-time" id="dispTotalTime">⏱ Time Taken: --</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dispEvaluationBadge">
+                    <span style="background: var(--success-bg); border: 1.5px solid var(--success-border); color: var(--success-deep); padding: 6px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 900; letter-spacing: 0.5px;">
+                        ✓ EVALUATION COMPLETED
+                    </span>
+                </div>
+            </div>
+
+            <!-- 4-Point Metrics Quad -->
+            <div class="score-quad-grid">
+                <div class="score-cell">
+                    <div class="score-val" id="dispScore" style="color: var(--primary);">0</div>
+                    <div class="score-lbl">Total Marks Obtained</div>
+                </div>
+                <div class="score-cell">
+                    <div class="score-val" id="dispCorrect" style="color: #059669;">0</div>
+                    <div class="score-lbl">Correct Answers</div>
+                </div>
+                <div class="score-cell">
+                    <div class="score-val" id="dispWrong" style="color: #dc2626;">0</div>
+                    <div class="score-lbl">Wrong Answers</div>
+                </div>
+                <div class="score-cell">
+                    <div class="score-val" id="dispPercentage" style="color: #4f46e5;">0%</div>
+                    <div class="score-lbl">Aggregate Percentage</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Filter Toolbar -->
+        <div class="filter-toolbar-sticky no-print">
+            <div class="filter-tabs">
+                <button type="button" class="filter-btn active" id="filterAllBtn" onclick="filterQuestions('all')">All Questions (<span id="countAll">40</span>)</button>
+                <button type="button" class="filter-btn" id="filterCorrectBtn" onclick="filterQuestions('correct')">Correct (<span id="countCorrect">0</span>)</button>
+                <button type="button" class="filter-btn" id="filterWrongBtn" onclick="filterQuestions('wrong')">Wrong (<span id="countWrong">0</span>)</button>
+                <button type="button" class="filter-btn" id="filterUnattemptedBtn" onclick="filterQuestions('unattempted')">Unattempted (<span id="countUnattempted">0</span>)</button>
+            </div>
+            <div style="font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">
+                Official Answer Key Verified ✓
+            </div>
+        </div>
+
+        <!-- 40 Questions Display Stack -->
+        <div class="responses-container" id="responsesContainer">
+            <!-- Populated dynamically via JS -->
+        </div>
+    </main>
+
+    <!-- ==========================================================================
+         💡 6. SMART INTERACTIVE BILINGUAL SOLUTION MODAL
+         ========================================================================== -->
+    <div id="solutionModal">
+        <div class="solution-modal-box">
+            <div class="solution-top-header">
+                <div>
+                    <h3 id="solModalTitle" style="font-family: var(--font-display); font-size: 17px; font-weight: 900; color: var(--text-heading); text-transform: uppercase;">
+                        Question #1 Detailed Solution
+                    </h3>
+                    <span id="solTopicBadge" style="font-size: 11px; font-weight: 800; color: var(--primary-deep); text-transform: uppercase;">Topic: General</span>
+                </div>
+
+                <div class="sol-lang-switch">
+                    <button type="button" class="btn-lang-toggle active" id="btnLangHi" onclick="switchSolutionLang('hi')">🇮🇳 हिन्दी</button>
+                    <button type="button" class="btn-lang-toggle" id="btnLangEn" onclick="switchSolutionLang('en')">🇬🇧 English</button>
+                    <button type="button" class="btn-lang-toggle" style="background:#fee2e2; border-color:#fecaca; color:#dc2626;" onclick="closeSolutionModal()">✕</button>
+                </div>
+            </div>
+
+            <div class="sol-section-card" id="solDiagramContainer" style="display: none;">
+                <div class="sol-sec-title" style="color: var(--primary-deep);">📐 Geometric Visual Figure / रेखाचित्र</div>
+                <div class="sol-diagram-box" id="solDiagramContent"></div>
+            </div>
+
+            <div class="sol-section-card" id="solFormulaCard">
+                <div class="sol-sec-title" style="color: #059669;">📌 Key Formula & Concept / मुख्य सूत्र</div>
+                <div class="sol-formula-box" id="solFormulaContent">--</div>
+            </div>
+
+            <div class="sol-section-card">
+                <div class="sol-sec-title" style="color: var(--text-heading);">📝 Step-by-Step Detailed Calculation / चरणबद्ध हल</div>
+                <div style="font-size: 14px; color: var(--text-body); line-height: 1.7;" id="solStepsContent">--</div>
+            </div>
+
+            <div class="sol-section-card" id="solTrickCard" style="background: #fffbeb; border-color: #fde68a;">
+                <div class="sol-sec-title" style="color: #b45309;">⚡ Smart Exam Shortcut / त्वरित हल ट्रिक</div>
+                <div style="font-size: 13.5px; color: #92400e; line-height: 1.6; font-weight: 700;" id="solTrickContent">--</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         🔒 7. TEACHER PASSCODE AUTHORIZATION MODAL
+         ========================================================================== -->
+    <div id="adminBypassModal" class="modal-overlay no-print">
+        <div class="modal-box">
+            <div style="font-size: 34px; margin-bottom: 10px;">🛡️</div>
+            <h3 style="font-family: var(--font-display); font-size: 18.5px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px;">
+                Teacher Authorization
+            </h3>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; font-weight: 600;">
+                उत्तरपुस्तिका अनलॉक करने हेतु शिक्षक का मास्टर पासवर्ड दर्ज करें:
+            </p>
+            <input 
+                type="password" 
+                id="adminPassInput" 
+                placeholder="ENTER MASTER PASSCODE" 
+                class="modal-pass-input" 
+                autocomplete="off"
+                oninput="this.value = this.value.toUpperCase()">
+
+            <div id="adminErr" class="modal-err-msg">❌ अमान्य पासवर्ड! कृपया सही कोड दर्ज करें।</div>
+
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button type="button" class="btn-header-action" style="flex: 1; min-height: 44px; font-size: 13px;" onclick="verifyAdminAccess()">
+                    Authorize & Load 🚀
+                </button>
+                <button type="button" class="btn-header-action btn-header-secondary" style="min-height: 44px;" onclick="closeAdminModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Loading Spinner Overlay -->
+    <div id="loadingOverlay">
+        <div class="spinner-disc"></div>
+        <div id="loadingText" style="font-size: 14.5px; font-weight: 800; color: var(--text-heading); text-align: center; max-width: 320px;">
+            Connecting to examination cloud sheet... ⏳
+        </div>
+    </div>
+
+    <!-- Questions Dataset -->
+    <script src="js/questions.js" onerror="this.onerror=null; console.warn('js/questions.js not detected, using internal fallback.');"></script>
+
+    <!-- ==========================================================================
+         🧠 8. ULTRA-ROBUST RESPONSE SHEET ENGINE JAVASCRIPT
+         ========================================================================== -->
+    <script>
+        const PORTAL_CONFIG = {
+            scriptUrl: "https://script.google.com/macros/s/AKfycbzQysEVoQmSS6w_cEeLYK1g95T16cUT5taIdjXfdDLUsOggqFnVMU5GDrl3C3c-Olvt/exec",
+            masterKeys: ["GK9890"]
+        };
+
+        let currentActiveCandidate = null;
+        let activeFilter = 'all';
+        let currentModalQIndex = 0;
+        let solutionLang = 'hi';
+
+        function isUnlockedBySchedule() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday
+            const hour = now.getHours();
+            return (day === 0 && hour >= 12);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Anti-autofill guard: explicitly clear search field
+            const searchField = document.getElementById("rollSearchField");
+            if (searchField) {
+                searchField.value = "";
+                setTimeout(() => { searchField.value = ""; }, 50);
+                setTimeout(() => { searchField.value = ""; }, 300);
+            }
+
+            const isAllowed = isUnlockedBySchedule() || sessionStorage.getItem("adminUnlockedAll") === "true";
+            if (!isAllowed) {
+                document.getElementById("searchCardBox").style.display = "none";
+                document.getElementById("mainResponseSheet").style.display = "none";
+                document.getElementById("lockedScreenNotice").style.display = "block";
+            } else {
+                const urlParams = new URLSearchParams(window.location.search);
+                const rollParam = urlParams.get('roll');
+                if (rollParam) {
+                    if (searchField) searchField.value = rollParam.trim().toUpperCase();
+                    loadCandidateResponse(rollParam.trim().toUpperCase());
+                }
+            }
+        });
+
+        /**
+         * 🔍 CORE CANDIDATE RESPONSE SEARCH ENGINE
+         */
+        async function loadCandidateResponse(overrideRoll = null, overrideName = null) {
+            const rollInput = document.getElementById("rollSearchField");
+            const targetRoll = (overrideRoll || (rollInput ? rollInput.value : "")).trim().toUpperCase();
+            const targetName = (overrideName || "").trim().toUpperCase();
+
+            if (!targetRoll) {
+                showToast("⚠️ कृपया रोल नंबर दर्ज करें!");
+                playTone("error");
+                if (rollInput) rollInput.focus();
+                return;
+            }
+
+            toggleLoading(true, `Connecting to examination cloud sheet for Roll [${targetRoll}]... ⏳`);
+            playTone("click");
+
+            let data = null;
+
+            // STRATEGY 1: Direct endpoint (?action=get_candidate_response)
+            try {
+                let directUrl = `${PORTAL_CONFIG.scriptUrl}?action=get_candidate_response&roll=${encodeURIComponent(targetRoll)}&_t=${Date.now()}`;
+                if (targetName) directUrl += `&name=${encodeURIComponent(targetName)}`;
+                const res = await fetch(directUrl);
+                data = await res.json();
+            } catch (err1) {
+                console.warn("Direct endpoint warning:", err1);
+            }
+
+            // STRATEGY 2: Zero-Failure Fallback (?action=get_active_students)
+            if (!data || !data.found || data.result !== "success") {
+                try {
+                    toggleLoading(true, `Scanning database records for [${targetRoll}]... 🔍`);
+                    const fallbackUrl = `${PORTAL_CONFIG.scriptUrl}?action=get_active_students&adminPass=GK9890&_t=${Date.now()}`;
+                    const fbRes = await fetch(fallbackUrl);
+                    const fbData = await fbRes.json();
+
+                    if (fbData && Array.isArray(fbData.submissions) && fbData.submissions.length > 0) {
+                        const cleanTargetNum = targetRoll.replace(/[^0-9]/g, '');
+
+                        const matchedSubs = fbData.submissions.filter(sub => {
+                            const subRoll = String(sub.roll || '').toUpperCase().trim();
+                            const sName = String(sub.name || '').toUpperCase().trim();
+                            const subRollNum = subRoll.replace(/[^0-9]/g, '');
+
+                            if (subRoll === targetRoll) {
+                                if (targetName && sName !== targetName) return false;
+                                return true;
+                            }
+                            if (cleanTargetNum && subRollNum && parseInt(cleanTargetNum, 10) === parseInt(subRollNum, 10)) {
+                                if (targetName && sName !== targetName) return false;
+                                return true;
+                            }
+                            return false;
+                        });
+
+                        if (matchedSubs.length === 1) {
+                            const single = matchedSubs[0];
+                            data = {
+                                result: "success",
+                                found: true,
+                                multiple: false,
+                                count: 1,
+                                name: single.name || "Candidate",
+                                roll: single.roll || targetRoll,
+                                className: single.class || single.className || "Standard",
+                                score: single.score !== undefined ? single.score : 0,
+                                correct: single.correct !== undefined ? single.correct : 0,
+                                wrong: single.wrong !== undefined ? single.wrong : 0,
+                                percentage: single.percentage || "0%",
+                                status: single.status || "COMPLETED",
+                                date: single.date || "Today",
+                                timeTaken: single.timeTaken || "",
+                                responsesString: single.responses || "",
+                                rawPayload: single.rawPayload || ""
+                            };
+                        } else if (matchedSubs.length > 1) {
+                            data = {
+                                result: "success",
+                                found: true,
+                                multiple: true,
+                                count: matchedSubs.length,
+                                candidates: matchedSubs.map(s => ({
+                                    name: s.name || "Candidate",
+                                    roll: s.roll || targetRoll,
+                                    className: s.class || s.className || "Standard",
+                                    score: s.score !== undefined ? s.score : 0,
+                                    correct: s.correct !== undefined ? s.correct : 0,
+                                    wrong: s.wrong !== undefined ? s.wrong : 0,
+                                    percentage: s.percentage || "0%",
+                                    status: s.status || "COMPLETED",
+                                    date: s.date || "Today",
+                                    timeTaken: s.timeTaken || "",
+                                    responsesString: s.responses || "",
+                                    rawPayload: s.rawPayload || ""
+                                }))
+                            };
+                        }
+                    }
+                } catch (err2) {
+                    console.warn("Fallback engine warning:", err2);
+                }
+            }
+
+            // STRATEGY 3: Local device mirror fallback
+            if (!data || !data.found) {
+                const localRoll = (localStorage.getItem("roll") || "").toUpperCase();
+                const cleanTargetNum = targetRoll.replace(/[^0-9]/g, '');
+                const cleanLocalNum = localRoll.replace(/[^0-9]/g, '');
+
+                if (localRoll === targetRoll || (cleanTargetNum && cleanLocalNum && parseInt(cleanTargetNum, 10) === parseInt(cleanLocalNum, 10))) {
+                    const localAnswers = localStorage.getItem("gtc_answers");
+                    const localTimes = localStorage.getItem("gtc_last_times");
+                    if (localAnswers) {
+                        data = {
+                            result: "success",
+                            found: true,
+                            multiple: false,
+                            name: localStorage.getItem("name") || "Candidate",
+                            roll: localRoll,
+                            className: localStorage.getItem("class") || "Standard",
+                            score: localStorage.getItem("gtc_last_score") || "0",
+                            correct: localStorage.getItem("gtc_last_correct") || "0",
+                            wrong: localStorage.getItem("gtc_last_wrong") || "0",
+                            percentage: localStorage.getItem("gtc_last_percentage") || "0%",
+                            status: "RECORDED (LOCAL DEVICE)",
+                            date: "Today",
+                            timeTaken: localStorage.getItem("gtc_last_time_taken") || "",
+                            responsesString: "",
+                            rawPayload: JSON.stringify({
+                                userAnswers: JSON.parse(localAnswers),
+                                questionTimes: localTimes ? JSON.parse(localTimes) : {},
+                                timeTaken: localStorage.getItem("gtc_last_time_taken") || ""
+                            })
+                        };
+                    }
+                }
+            }
+
+            toggleLoading(false);
+
+            if (data && data.found) {
+                let validCandidates = [];
+                if (Array.isArray(data.candidates) && data.candidates.length > 0) {
+                    const targetNum = targetRoll.replace(/[^0-9]/g, '');
+                    validCandidates = data.candidates.filter(c => {
+                        const cRoll = String(c.roll || '').toUpperCase().trim();
+                        const cNum = cRoll.replace(/[^0-9]/g, '');
+                        if (cRoll === targetRoll) return true;
+                        if (targetNum && cNum && parseInt(targetNum, 10) === parseInt(cNum, 10)) return true;
+                        return false;
+                    });
+                }
+
+                // CASE 1: Truly multiple candidates with SAME roll number -> Show Profile Picker
+                if (validCandidates.length > 1) {
+                    playTone("success");
+                    showToast(`रोल नंबर '${targetRoll}' पर ${validCandidates.length} छात्र मिले। अपना प्रोफ़ाइल चुनें!`);
+                    renderCandidateProfiles(validCandidates);
+                    return;
+                }
+
+                // CASE 2: Single candidate -> DIRECT OPEN!
+                playTone("success");
+                const singleTarget = validCandidates.length === 1 ? validCandidates[0] : data;
+
+                const drawerEl = document.getElementById("candidateProfileDrawer");
+                if (drawerEl) drawerEl.style.display = "none";
+
+                showToast(`✓ छात्र [${singleTarget.name} (${singleTarget.roll})] का रिस्पॉन्स लोड हो गया!`);
+                renderCandidateResponseSheet(singleTarget);
+
+            } else {
+                playTone("error");
+                const errDetail = (data && data.message) ? data.message : `रोल नंबर '${targetRoll}' का कोई सबमिशन Google Sheet पर नहीं मिला!`;
+                showToast(errDetail);
+                document.getElementById("candidateProfileDrawer").style.display = "none";
+                document.getElementById("mainResponseSheet").style.display = "none";
+            }
+        }
+
+        /**
+         * Render Profile Cards for Same Roll Candidates
+         */
+        function renderCandidateProfiles(candidates) {
+            const drawer = document.getElementById("candidateProfileDrawer");
+            const container = document.getElementById("candidatesListContainer");
+            const mainSheet = document.getElementById("mainResponseSheet");
+
+            if (mainSheet) mainSheet.style.display = "none";
+
+            let html = "";
+            candidates.forEach((c) => {
+                const sName = c.name || "Candidate";
+                const sRoll = c.roll || "";
+                const sClass = c.className || "Standard";
+                const sDate = c.date || "Today";
+
+                html += `
+                    <div class="candidate-profile-card" onclick="loadCandidateResponse('${sRoll}', '${sName}')">
+                        <div class="prof-left">
+                            <span class="prof-name">
+                                <span>👨‍🎓</span>
+                                <span>${sName}</span>
+                            </span>
+                            <span class="prof-meta">
+                                <span>Roll: ${sRoll}</span>
+                                <span>•</span>
+                                <span>${sClass}</span>
+                                <span>•</span>
+                                <span>${sDate}</span>
+                            </span>
+                        </div>
+                        <button type="button" class="btn-select-prof">Open Sheet ➔</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            drawer.style.display = "block";
+            drawer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /**
+         * Smart Percentage Formatter (Converts 0.72 -> 72% and 72 -> 72%)
+         */
+        function formatCleanPercentage(rawVal, rawScore) {
+            if (rawVal !== undefined && rawVal !== null && rawVal !== "") {
+                const str = String(rawVal).trim();
+                const hasPercent = str.includes("%");
+                const num = parseFloat(str.replace(/[^0-9.-]/g, ""));
+                if (!isNaN(num)) {
+                    if (!hasPercent && num > 0 && num <= 1) {
+                        return `${Math.round(num * 10000) / 100}%`;
+                    }
+                    return `${Math.round(num * 100) / 100}%`;
+                }
+            }
+            if (rawScore !== undefined) {
+                const sc = parseFloat(rawScore) || 0;
+                return `${Math.round((sc / 80) * 10000) / 100}%`;
+            }
+            return "0%";
+        }
+
+        /**
+         * Render Response Sheet & Extract Real Answers + Real Question Times
+         */
+        function renderCandidateResponseSheet(candidate) {
+            currentActiveCandidate = candidate;
+
+            document.getElementById("dispStudentName").textContent = candidate.name || "Candidate";
+            document.getElementById("dispStudentRoll").textContent = `Roll: ${candidate.roll || '--'}`;
+            document.getElementById("dispStudentClass").textContent = `Class: ${candidate.className || '--'}`;
+            document.getElementById("dispExamDate").textContent = `Date: ${candidate.date || 'Today'}`;
+
+            document.getElementById("dispScore").textContent = candidate.score !== undefined ? candidate.score : 0;
+            document.getElementById("dispCorrect").textContent = candidate.correct !== undefined ? candidate.correct : 0;
+            document.getElementById("dispWrong").textContent = candidate.wrong !== undefined ? candidate.wrong : 0;
+            document.getElementById("dispPercentage").textContent = formatCleanPercentage(candidate.percentage, candidate.score);
+
+            // Parse User Choices & Question Times from rawPayload or responsesString
+            const totalQuestions = (typeof questions !== 'undefined' && Array.isArray(questions)) ? questions.length : 40;
+            const parsedChoices = new Array(totalQuestions).fill(null);
+            let parsedQuestionTimes = {};
+            let parsedTotalTimeStr = (candidate.timeTaken && candidate.timeTaken !== "-") ? String(candidate.timeTaken).trim() : "";
+
+            // Attempt 1: Parse rawPayload JSON
+            let payloadParsed = false;
+            if (candidate.rawPayload) {
+                try {
+                    let cleanStr = String(candidate.rawPayload).trim();
+                    if (cleanStr.startsWith('"') && cleanStr.endsWith('"')) {
+                        cleanStr = JSON.parse(cleanStr);
+                    }
+                    const payloadObj = typeof cleanStr === 'object' ? cleanStr : JSON.parse(cleanStr);
+                    if (payloadObj && Array.isArray(payloadObj.userAnswers)) {
+                        payloadObj.userAnswers.forEach((ans, idx) => {
+                            if (ans !== null && ans !== undefined && ans >= 0 && ans <= 3) {
+                                parsedChoices[idx] = ["a", "b", "c", "d"][ans];
+                            }
+                        });
+                        payloadParsed = true;
+                    }
+                    if (payloadObj && payloadObj.questionTimes && typeof payloadObj.questionTimes === "object") {
+                        parsedQuestionTimes = payloadObj.questionTimes;
+                    }
+                    if (!parsedTotalTimeStr && payloadObj && payloadObj.timeTaken) {
+                        parsedTotalTimeStr = String(payloadObj.timeTaken);
+                    }
+                } catch (pe) {
+                    console.warn("Payload parse warning, checking response tokens:", pe);
+                }
+            }
+
+            // Attempt 2: Parse regex tokens from responsesString (e.g. "Q1: (b) ✅ [14s]")
+            if (candidate.responsesString) {
+                const regex = /Q\s*(\d+)\s*[:\-\s]\s*\(?([a-dA-D\-])\)?(?:[^|\[]*\[(\d+)s\])?/gi;
+                let match;
+                while ((match = regex.exec(candidate.responsesString)) !== null) {
+                    const qIdx = parseInt(match[1], 10) - 1;
+                    const letter = match[2].toLowerCase();
+                    const secToken = match[3] !== undefined ? parseInt(match[3], 10) : null;
+                    if (qIdx >= 0 && qIdx < totalQuestions) {
+                        if (!payloadParsed) {
+                            parsedChoices[qIdx] = (letter === '-' || letter === '') ? null : letter;
+                        }
+                        if (secToken !== null && !isNaN(secToken) && parsedQuestionTimes[qIdx] === undefined) {
+                            parsedQuestionTimes[qIdx] = secToken;
+                        }
+                    }
+                }
+            }
+
+            // Fallback: check local device storage if same roll on same device
+            const localRoll = (localStorage.getItem("roll") || "").toUpperCase().trim();
+            const candRollClean = String(candidate.roll || "").toUpperCase().trim();
+            if (Object.keys(parsedQuestionTimes).length === 0 && localRoll && localRoll === candRollClean) {
+                try {
+                    const candKey = `${candRollClean}_${String(candidate.name || "Candidate").toUpperCase().trim().replace(/\s+/g, '_')}`;
+                    const savedLocalTimes = localStorage.getItem(`gtc_times_${candKey}`) || localStorage.getItem("gtc_last_times");
+                    if (savedLocalTimes) {
+                        parsedQuestionTimes = JSON.parse(savedLocalTimes) || {};
+                    }
+                    if (!parsedTotalTimeStr) {
+                        parsedTotalTimeStr = localStorage.getItem("gtc_last_time_taken") || "";
+                    }
+                } catch (e) {}
+            }
+
+            // Compute total time from question times if not explicitly provided
+            if (!parsedTotalTimeStr) {
+                const sumSec = Object.values(parsedQuestionTimes).reduce((acc, v) => acc + (Number(v) || 0), 0);
+                if (sumSec > 0) {
+                    parsedTotalTimeStr = formatSecondsDuration(sumSec);
+                }
+            }
+
+            const dispTotalTimeEl = document.getElementById("dispTotalTime");
+            if (dispTotalTimeEl) {
+                dispTotalTimeEl.textContent = `⏱ Time Taken: ${parsedTotalTimeStr || 'Recorded'}`;
+            }
+
+            candidate.parsedChoices = parsedChoices;
+            candidate.parsedQuestionTimes = parsedQuestionTimes;
+            renderQuestionsList();
+
+            document.getElementById("mainResponseSheet").style.display = "block";
+            document.getElementById("mainResponseSheet").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /**
+         * Render All Question Cards with 100% Real Question Time (Zero Fake Formula)
+         */
+        function renderQuestionsList() {
+            if (!currentActiveCandidate) return;
+
+            const container = document.getElementById("responsesContainer");
+            const qBank = (typeof questions !== 'undefined' && Array.isArray(questions)) ? questions : [];
+            const totalQ = qBank.length;
+            const qTimes = currentActiveCandidate.parsedQuestionTimes || {};
+
+            let correctCount = 0;
+            let wrongCount = 0;
+            let unattemptedCount = 0;
+            let html = "";
+
+            for (let idx = 0; idx < totalQ; idx++) {
+                const q = qBank[idx];
+                const qNum = idx + 1;
+                const chosenLetter = currentActiveCandidate.parsedChoices[idx] || null;
+                const officialKey = getCleanOfficialKey(q);
+
+                const isAttempted = (chosenLetter !== null && chosenLetter !== undefined && chosenLetter !== '-');
+                const isCorrect = isAttempted && (chosenLetter.toLowerCase() === officialKey.toLowerCase());
+                const isWrong = isAttempted && !isCorrect;
+                const isUnattempted = !isAttempted;
+
+                if (isCorrect) correctCount++;
+                else if (isWrong) wrongCount++;
+                else unattemptedCount++;
+
+                // Apply Active Filter
+                if (activeFilter === 'correct' && !isCorrect) continue;
+                if (activeFilter === 'wrong' && !isWrong) continue;
+                if (activeFilter === 'unattempted' && !isUnattempted) continue;
+
+                let cardClass = "q-card";
+                let statusBadgeText = "";
+                let attemptStatusBadge = "";
+
+                if (isCorrect) {
+                    cardClass += " status-correct";
+                    attemptStatusBadge = `<span style="color:#0284c7; font-weight:800;">● Answered</span>`;
+                    statusBadgeText = `<span style="color:#059669; font-weight:800;">✓ Right (+2.00)</span>`;
+                } else if (isWrong) {
+                    cardClass += " status-wrong";
+                    attemptStatusBadge = `<span style="color:#0284c7; font-weight:800;">● Answered</span>`;
+                    statusBadgeText = `<span style="color:#dc2626; font-weight:800;">✗ Wrong (-0.25)</span>`;
+                } else {
+                    cardClass += " status-unattempted";
+                    attemptStatusBadge = `<span style="color:#64748b; font-weight:800;">○ Skipped</span>`;
+                    statusBadgeText = `<span style="color:#64748b; font-weight:800;">○ Skipped (0.00)</span>`;
+                }
+
+                // Real Question Time Calculation (No fake fallback formula)
+                const rawSec = qTimes[idx] !== undefined ? qTimes[idx] : qTimes[String(idx)];
+                const formattedQTime = formatQuestionTime(rawSec);
+
+                // Render Options
+                const optsHi = q.options_hi || q.options || [];
+                const optsEn = q.options_en || [];
+                let optionsHtml = "";
+
+                for (let o = 0; o < 4; o++) {
+                    const optLetter = ["a", "b", "c", "d"][o];
+                    const optTextHi = String(optsHi[o] || `Option ${optLetter.toUpperCase()}`).replace(/^\([a-dA-D]\)\s*/, "");
+                    const optTextEn = String(optsEn[o] || "").replace(/^\([a-dA-D]\)\s*/, "");
+                    let fullOptText = optTextEn ? `${optTextHi} / ${optTextEn}` : optTextHi;
+
+                    let optClass = "q-opt-item";
+                    let optTag = "";
+
+                    const isThisOfficial = (optLetter.toLowerCase() === officialKey.toLowerCase());
+                    const isThisChosen = (chosenLetter && chosenLetter.toLowerCase() === optLetter.toLowerCase());
+
+                    if (isThisOfficial) {
+                        optClass += " is-correct-official";
+                        optTag = ` <span style="font-size:11px; margin-left:auto;">(✓ Official Answer)</span>`;
+                    }
+                    if (isThisChosen && !isThisOfficial) {
+                        optClass += " is-wrong-chosen";
+                        optTag = ` <span style="font-size:11px; margin-left:auto;">(✗ Your Choice)</span>`;
+                    }
+
+                    optionsHtml += `
+                        <div class="${optClass}">
+                            <span><b>(${optLetter})</b> ${fullOptText}</span>
+                            ${optTag}
+                        </div>
+                    `;
+                }
+
+                const qTextHi = q.question_hi || q.question || "";
+                const qTextEn = q.question_en || "";
+                let qTitleText = qTextEn ? `${qTextHi}<br><small style="color:var(--text-muted); font-size:13px; font-weight:600;">(Eng: ${qTextEn})</small>` : qTextHi;
+
+                html += `
+                    <div class="${cardClass}" id="q-card-${qNum}">
+                        <div>
+                            <div class="q-header-strip">
+                                <span class="q-num-badge">Question #${qNum}</span>
+                                <span class="q-topic-pill">Topic: ${q.topic || 'General'}</span>
+                            </div>
+                            <div class="q-text-body">${qTitleText}</div>
+                            <div class="q-options-stack">${optionsHtml}</div>
+                        </div>
+
+                        <!-- 🌟 RIGHT PANEL WITH REAL QUESTION TIME + SOLUTION BUTTON -->
+                        <div class="q-status-panel">
+                            <div class="status-rows-cluster">
+                                <div class="status-row">
+                                    <span class="status-label">Status:</span>
+                                    <span>${attemptStatusBadge}</span>
+                                </div>
+                                <div class="status-row">
+                                    <span class="status-label">Result:</span>
+                                    <span>${statusBadgeText}</span>
+                                </div>
+                                <div class="status-row">
+                                    <span class="status-label">Your Option:</span>
+                                    <span class="status-val" style="color:${isCorrect ? '#059669' : (isWrong ? '#dc2626' : '#64748b')}">
+                                        ${chosenLetter ? `Option (${chosenLetter.toUpperCase()})` : '-- (Skipped)'}
+                                    </span>
+                                </div>
+                                <div class="status-row">
+                                    <span class="status-label">Right Answer:</span>
+                                    <span class="status-val" style="color:#059669;">Option (${officialKey.toUpperCase()})</span>
+                                </div>
+                                <div class="status-row">
+                                    <span class="status-label">Time Spent:</span>
+                                    <span class="time-pill-val">⏱ ${formattedQTime}</span>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-view-solution" onclick="openQuestionSolution(${idx})">
+                                <span>💡 View Solution / हल देखें</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById("countAll").textContent = totalQ;
+            document.getElementById("countCorrect").textContent = correctCount;
+            document.getElementById("countWrong").textContent = wrongCount;
+            document.getElementById("countUnattempted").textContent = unattemptedCount;
+
+            container.innerHTML = html;
+
+            // Trigger KaTeX formula rendering
+            if (window.renderMathInElement) {
+                renderMathInElement(container, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function formatSecondsDuration(seconds) {
+            const sec = Math.max(0, Math.round(Number(seconds) || 0));
+            if (sec < 60) return `${sec}s`;
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return s > 0 ? `${m}m ${s}s` : `${m}m`;
+        }
+
+        function formatQuestionTime(rawSec) {
+            if (rawSec === undefined || rawSec === null || isNaN(Number(rawSec))) {
+                return "0s";
+            }
+            return formatSecondsDuration(rawSec);
+        }
+
+        function filterQuestions(filterType) {
+            activeFilter = filterType;
+            document.getElementById('filterAllBtn').classList.toggle('active', filterType === 'all');
+            document.getElementById('filterCorrectBtn').classList.toggle('active', filterType === 'correct');
+            document.getElementById('filterWrongBtn').classList.toggle('active', filterType === 'wrong');
+            document.getElementById('filterUnattemptedBtn').classList.toggle('active', filterType === 'unattempted');
+            playTone("click");
+            renderQuestionsList();
+        }
+
+        function getCleanOfficialKey(q) {
+            if (!q) return "A";
+            const ans = String(q.answer || q.correct || "").trim().toLowerCase();
+            if (ans.includes("(a)") || ans === "a") return "A";
+            if (ans.includes("(b)") || ans === "b") return "B";
+            if (ans.includes("(c)") || ans === "c") return "C";
+            if (ans.includes("(d)") || ans === "d") return "D";
+            return "A";
+        }
+
+        /**
+         * 💡 SMART SOLUTION MODAL LOGIC (KaTeX + Vector Figures)
+         */
+        function openQuestionSolution(qIndex) {
+            currentModalQIndex = qIndex;
+            const qBank = (typeof questions !== 'undefined' && Array.isArray(questions)) ? questions : [];
+            const q = qBank[qIndex];
+            if (!q) return;
+
+            document.getElementById("solModalTitle").textContent = `Question #${qIndex + 1} Step-by-Step Solution`;
+            document.getElementById("solTopicBadge").textContent = `Topic: ${q.topic || 'General'}`;
+
+            // Geometric SVG Diagram
+            const diagBox = document.getElementById("solDiagramContainer");
+            const diagContent = document.getElementById("solDiagramContent");
+            if (q.diagram_svg) {
+                diagContent.innerHTML = q.diagram_svg;
+                diagBox.style.display = "block";
+            } else {
+                diagBox.style.display = "none";
+            }
+
+            renderSolutionText();
+
+            document.getElementById("solutionModal").style.display = "flex";
+            playTone("click");
+        }
+
+        function switchSolutionLang(lang) {
+            solutionLang = lang;
+            document.getElementById("btnLangHi").classList.toggle("active", lang === 'hi');
+            document.getElementById("btnLangEn").classList.toggle("active", lang === 'en');
+            renderSolutionText();
+            playTone("click");
+        }
+
+        function renderSolutionText() {
+            const qBank = (typeof questions !== 'undefined' && Array.isArray(questions)) ? questions : [];
+            const q = qBank[currentModalQIndex];
+            if (!q) return;
+
+            const isHi = solutionLang === 'hi';
+
+            // Key Formula
+            const formulaText = isHi ? (q.formula_hi || q.formula_en || "मानक गणितीय अवधारणा") : (q.formula_en || q.formula_hi || "Standard Mathematical Concept");
+            document.getElementById("solFormulaContent").innerHTML = formulaText;
+
+            // Step-by-step
+            const stepsText = isHi ? (q.solution_hi || q.solution_en || "चरणबद्ध हल उपलब्ध है।") : (q.solution_en || q.solution_hi || "Detailed steps available.");
+            document.getElementById("solStepsContent").innerHTML = stepsText;
+
+            // Shortcut Trick
+            const trickCard = document.getElementById("solTrickCard");
+            const trickText = isHi ? (q.trick_hi || q.trick_en || "") : (q.trick_en || q.trick_hi || "");
+            if (trickText) {
+                document.getElementById("solTrickContent").innerHTML = trickText;
+                trickCard.style.display = "block";
+            } else {
+                trickCard.style.display = "none";
+            }
+
+            // Math Rendering
+            const modalBox = document.querySelector(".solution-modal-box");
+            if (window.renderMathInElement && modalBox) {
+                renderMathInElement(modalBox, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false }
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function closeSolutionModal() {
+            document.getElementById("solutionModal").style.display = "none";
+        }
+
+        /**
+         * Teacher Master Authorization (Passcode: GK9890)
+         */
+        function openAdminModal() {
+            document.getElementById("adminErr").style.display = "none";
+            const input = document.getElementById("adminPassInput");
+            if (input) input.value = "";
+            document.getElementById("adminBypassModal").style.display = "flex";
+            if (input) setTimeout(() => input.focus(), 150);
+        }
+
+        function closeAdminModal() {
+            document.getElementById("adminBypassModal").style.display = "none";
+        }
+
+        function verifyAdminAccess() {
+            const entered = document.getElementById("adminPassInput").value.trim().toUpperCase();
+            if (PORTAL_CONFIG.masterKeys.includes(entered)) {
+                sessionStorage.setItem("adminUnlockedAll", "true");
+                closeAdminModal();
+                showToast("✅ Authorization Confirmed! Unlocking portal...");
+                setTimeout(() => {
+                    document.getElementById("lockedScreenNotice").style.display = "none";
+                    document.getElementById("searchCardBox").style.display = "block";
+                    playTone("success");
+                }, 350);
+            } else {
+                document.getElementById("adminErr").style.display = "block";
+                playTone("error");
+            }
+        }
+
+        /**
+         * UI Audio & Helpers
+         */
+        function toggleLoading(show, message = "") {
+            const overlay = document.getElementById("loadingOverlay");
+            const text = document.getElementById("loadingText");
+            if (overlay) overlay.style.display = show ? "flex" : "none";
+            if (text && message) text.textContent = message;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById("sheetToast");
+            if (toast) {
+                toast.textContent = msg;
+                toast.style.display = "block";
+                setTimeout(() => { toast.style.display = "none"; }, 3400);
+            }
+        }
+
+        function playTone(type) {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioCtx();
+                if (ctx.state === 'suspended') ctx.resume();
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                if (type === "success") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(783.99, ctx.currentTime + 0.18);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+                } else if (type === "error") {
+                    osc.type = "sawtooth";
+                    osc.frequency.setValueAtTime(170, ctx.currentTime);
+                    osc.frequency.linearRampToValueAtTime(110, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+                } else if (type === "click") {
+                    osc.type = "sine";
+                    osc.frequency.setValueAtTime(750, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+                }
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.45);
+            } catch (e) {}
+        }
+
+        // Close modals when tapping outside box
+        window.addEventListener("click", (e) => {
+            const solModal = document.getElementById("solutionModal");
+            const adminModal = document.getElementById("adminBypassModal");
+            if (e.target === solModal) closeSolutionModal();
+            if (e.target === adminModal) closeAdminModal();
+        });
+    </script>
+</body>
+</html>

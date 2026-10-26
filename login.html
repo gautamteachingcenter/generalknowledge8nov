@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 🛡️ STRICT GATEWAY & SECURITY GUARD (Instant Pre-Flight Check) -->
+    <script>
+        (function() {
+            var isBlobEnv = window.location.protocol === "blob:" || window.location.href.startsWith("blob:");
+            if (!isBlobEnv) {
+                var authPassed = localStorage.getItem("authPassed") === "true";
+                var sessionValid = sessionStorage.getItem("activeSession") === "valid";
+                if (!authPassed || !sessionValid) {
+                    try {
+                        localStorage.removeItem("authPassed");
+                        sessionStorage.removeItem("activeSession");
+                        window.location.replace("auth.html");
+                    } catch (e) {
+                        window.location.href = "auth.html";
+                    }
+                }
+            } else {
+                if (!localStorage.getItem("authPassed")) localStorage.setItem("authPassed", "true");
+                if (!sessionStorage.getItem("activeSession")) sessionStorage.setItem("activeSession", "valid");
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0284c7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Candidate Verification & Login | Gautam Teaching Centre CBT Portal</title>
+    
+    <!-- High-Performance Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-deep: #0369a1;
+            --primary-light: #38bdf8;
+            --primary-soft: #f0f9ff;
+            --primary-border: #bae6fd;
+            --primary-glow: rgba(2, 132, 199, 0.22);
+            
+            --accent: #4f46e5;
+            --accent-deep: #3730a3;
+            --accent-soft: #eef2ff;
+            --accent-border: #c7d2fe;
+
+            --surface: #ffffff;
+            --surface-muted: #f8fafc;
+            --surface-hover: #f1f5f9;
+
+            --border-light: #e2e8f0;
+            --border-card: #cbd5e1;
+            --border-focus: #0284c7;
+
+            --text-heading: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --text-inverted: #ffffff;
+
+            --success: #10b981;
+            --success-deep: #059669;
+            --success-bg: #ecfdf5;
+            --success-border: #a7f3d0;
+
+            --warning: #f59e0b;
+            --warning-deep: #b45309;
+            --warning-bg: #fffbeb;
+            --warning-border: #fde68a;
+
+            --danger: #ef4444;
+            --danger-deep: #dc2626;
+            --danger-bg: #fef2f2;
+            --danger-border: #fecaca;
+
+            --radius-xs: 6px;
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --radius-full: 9999px;
+
+            --shadow-subtle: 0 4px 14px rgba(15, 23, 42, 0.04);
+            --shadow-card: 0 20px 45px -12px rgba(15, 23, 42, 0.08), 0 0 1px 1px rgba(15, 23, 42, 0.04);
+            --shadow-float: 0 14px 34px -8px rgba(2, 132, 199, 0.35);
+            --shadow-modal: 0 30px 70px -15px rgba(15, 23, 42, 0.3);
+
+            --transition-smooth: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-display: 'Outfit', sans-serif;
+            --font-hindi: 'Mukta', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 15px;
+        }
+
+        body {
+            background-color: #f8fafc;
+            min-height: 100vh;
+            color: var(--text-heading);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            overflow-x: hidden;
+            padding: 16px 14px 44px;
+        }
+
+        .ambient-glow-left {
+            position: fixed;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(199, 210, 254, 0.45) 0%, rgba(248, 250, 252, 0) 70%);
+            top: -120px;
+            left: -120px;
+            border-radius: 50%;
+            filter: blur(85px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .ambient-glow-right {
+            position: fixed;
+            width: 440px;
+            height: 440px;
+            background: radial-gradient(circle, rgba(186, 230, 253, 0.5) 0%, rgba(248, 250, 252, 0) 70%);
+            bottom: -90px;
+            right: -90px;
+            border-radius: 50%;
+            filter: blur(85px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .portal-header {
+            width: 100%;
+            max-width: 540px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-subtle);
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .brand-cluster {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+        }
+
+        .brand-logo-disc {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+            border: 1.8px solid var(--primary-border);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .brand-logo-disc:hover {
+            transform: scale(1.05) rotate(-3deg);
+            border-color: var(--primary);
+        }
+
+        .brand-taglines h1 {
+            font-family: var(--font-display);
+            font-size: 15.5px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+
+        .brand-taglines p {
+            font-size: 10px;
+            color: var(--primary-deep);
+            font-weight: 800;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+        }
+
+        .step-pill-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-soft);
+            border: 1.5px solid var(--accent-border);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .progress-track-wrapper {
+            width: 100%;
+            max-width: 510px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
+            padding: 0 4px;
+        }
+
+        .progress-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .track-node {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            user-select: none;
+        }
+
+        .track-node.active {
+            color: var(--primary);
+        }
+
+        .track-node.done {
+            color: var(--success);
+        }
+
+        .node-bubble {
+            width: 26px;
+            height: 26px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 1.8px solid var(--border-card);
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .track-node.done .node-bubble {
+            background: var(--success-bg);
+            border-color: var(--success-border);
+            color: var(--success);
+        }
+
+        .track-node.active .node-bubble {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .track-connector-line {
+            flex: 1;
+            height: 2.5px;
+            background: var(--border-card);
+            margin: 0 10px;
+            border-radius: var(--radius-full);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-connector-line.filled {
+            background: var(--success);
+        }
+
+        /* Sunday 8 AM to 11:59 AM Lock Notice */
+        #lockedScreenNotice {
+            width: 100%;
+            max-width: 510px;
+            margin: 24px auto;
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 40px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-card);
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .lock-icon-crest {
+            width: 72px;
+            height: 72px;
+            background: #fffbeb;
+            border: 2px solid #fde68a;
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 34px;
+            color: #d97706;
+            box-shadow: 0 10px 24px -6px rgba(217, 119, 6, 0.25);
+        }
+
+        .lock-heading {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .lock-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 510px;
+            background: var(--surface);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: 30px 26px 26px;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 3.5px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .exam-meta-pill-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--surface-muted);
+            border: 1.2px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
+            margin-bottom: 20px;
+        }
+
+        .meta-pill-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: var(--primary-deep);
+            text-transform: uppercase;
+        }
+
+        .meta-pill-right {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 800;
+            background: #ffffff;
+            border: 1px solid var(--border-card);
+            padding: 2px 8px;
+            border-radius: var(--radius-xs);
+            color: var(--text-muted);
+        }
+
+        .auth-title-cluster {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-icon-badge {
+            width: 62px;
+            height: 62px;
+            background: linear-gradient(135deg, var(--primary-soft) 0%, #e0f2fe 100%);
+            border: 1.8px solid var(--primary-border);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 28px;
+            box-shadow: 0 8px 22px -6px rgba(2, 132, 199, 0.25);
+        }
+
+        .login-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--text-heading);
+            letter-spacing: -0.2px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .login-subtitle {
+            font-family: var(--font-hindi);
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .field-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11.5px;
+            font-weight: 800;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .field-label .required-dot {
+            color: var(--danger);
+        }
+
+        .input-box-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon-lead {
+            position: absolute;
+            left: 14px;
+            font-size: 17px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .field-input {
+            width: 100%;
+            height: 52px;
+            padding: 12px 14px 12px 42px;
+            background: #ffffff;
+            border: 1.8px solid var(--border-card);
+            border-radius: var(--radius-md);
+            font-size: 14.5px;
+            font-weight: 700;
+            color: var(--text-heading);
+            outline: none;
+            transition: var(--transition-smooth);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+        }
+
+        .field-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .field-input.mono-field {
+            font-family: var(--font-mono);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .field-select {
+            width: 100%;
+            height: 52px;
+            padding: 12px 42px 12px 42px;
+            background: #ffffff;
+            border: 1.8px solid var(--border-card);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-heading);
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            transition: var(--transition-smooth);
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+        }
+
+        .field-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .select-chevron {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--primary-deep);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .honor-code-box {
+            background: var(--surface-muted);
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .honor-code-box input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            margin-top: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .honor-code-text {
+            font-size: 11.5px;
+            color: var(--text-body);
+            line-height: 1.45;
+            font-weight: 600;
+        }
+
+        .honor-code-text strong {
+            color: var(--text-heading);
+        }
+
+        .btn-launch-room {
+            width: 100%;
+            min-height: 54px;
+            background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: var(--shadow-float);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-launch-room::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            transform: skewX(-25deg);
+            animation: shineSweep 4s infinite ease-in-out;
+        }
+
+        @keyframes shineSweep {
+            0% { left: -100%; }
+            20% { left: 140%; }
+            100% { left: 140%; }
+        }
+
+        .btn-launch-room:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 36px -6px rgba(37, 99, 235, 0.55);
+        }
+
+        .card-footer-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 14px;
+            border-top: 1.5px solid var(--border-light);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .security-flag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--success-deep);
+            font-size: 11.5px;
+            font-weight: 800;
+        }
+
+        .shake-animation {
+            animation: shakeHard 0.42s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shakeHard {
+            10%, 90% { transform: translate3d(-3px, 0, 0); }
+            20%, 80% { transform: translate3d(5px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        #loginToast {
+            position: fixed;
+            bottom: 26px;
+            background: #0f172a;
+            color: #ffffff;
+            padding: 11px 22px;
+            border-radius: var(--radius-full);
+            font-size: 12.5px;
+            font-weight: 700;
+            z-index: 100000;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            animation: toastPop 0.25s ease;
+        }
+
+        @keyframes toastPop {
+            from { transform: translateY(15px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99998;
+        }
+
+        .spinner-disc {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spinCircle 0.85s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spinCircle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loadingText {
+            font-size: 14.5px;
+            font-weight: 800;
+            color: var(--text-heading);
+            letter-spacing: 0.3px;
+            text-align: center;
+            max-width: 320px;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.78);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 99999;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            max-width: 440px;
+            width: 100%;
+            padding: 30px 24px;
+            text-align: center;
+            box-shadow: var(--shadow-modal);
+            position: relative;
+            animation: modalFadeIn 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.92) translateY(12px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-crest-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 28px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 19px;
+            font-weight: 900;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .modal-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .modal-pass-input {
+            width: 100%;
+            padding: 13px;
+            background: #f8fafc;
+            border: 1.8px solid var(--border-card);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: 15px;
+            text-align: center;
+            font-weight: 900;
+            letter-spacing: 3px;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .modal-pass-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 3.5px var(--primary-glow);
+        }
+
+        .modal-err-msg {
+            color: var(--danger-deep);
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            padding: 7px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        .modal-btn-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-modal-action {
+            flex: 1;
+            padding: 13px;
+            border-radius: var(--radius-md);
+            font-size: 13.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition-smooth);
+        }
+
+        .confirm-table-card {
+            background: #f8fafc;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            text-align: left;
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .confirm-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .confirm-label {
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .confirm-val {
+            color: var(--text-heading);
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ambient-glow-left"></div>
+    <div class="ambient-glow-right"></div>
+    <div id="loginToast">Notification Message</div>
+
+    <header class="portal-header">
+        <div class="brand-cluster">
+            <div class="brand-logo-disc" title="Portal Home" onclick="window.location.href='index.html'">🎓</div>
+            <div class="brand-taglines">
+                <h1>GAUTAM TEACHING CENTRE</h1>
+                <p>ASSESSMENT SUITE • 2026</p>
+            </div>
+        </div>
+        <div class="step-pill-indicator"><span>Stage 2 of 3</span></div>
+    </header>
+
+    <div class="progress-track-wrapper">
+        <div class="progress-track">
+            <div class="track-node done"><div class="node-bubble">✓</div><span>Access Code</span></div>
+            <div class="track-connector-line filled"></div>
+            <div class="track-node active"><div class="node-bubble">2</div><span>Candidate Info</span></div>
+            <div class="track-connector-line"></div>
+            <div class="track-node"><div class="node-bubble">3</div><span>Exam Room</span></div>
+        </div>
+    </div>
+
+    <!-- Sunday 8 AM to 11:59 AM Lock Notice -->
+    <div id="lockedScreenNotice">
+        <div class="lock-icon-crest">🔒</div>
+        <h2 class="lock-heading">Examination Window Locked</h2>
+        <p class="lock-desc">
+            यह ऑनलाइन परीक्षा हर रविवार सुबह 8:00 बजे से सुबह 11:59 बजे तक ही खुली रहती है। शिक्षक मास्टर पासवर्ड दर्ज करके अभी एक्सेस दे सकते हैं।
+        </p>
+        <button type="button" class="btn-launch-room" style="max-width: 260px; margin: 0 auto; min-height: 44px; font-size: 13px;" onclick="openAdminModal()">
+            Teacher Authorization 🛡️
+        </button>
+    </div>
+
+    <main class="login-card" id="loginCard">
+        <div class="exam-meta-pill-bar">
+            <div class="meta-pill-left"><span>⚡</span><span>Weekly Assessment 2026</span></div>
+            <div class="meta-pill-right" id="dispTotalQBadge">40 Qs • 60m</div>
+        </div>
+
+        <div class="auth-title-cluster">
+            <div class="login-icon-badge">👨‍🎓</div>
+            <h2 class="login-title">Candidate Login</h2>
+            <p class="login-subtitle">कृपया अपनी सही जानकारी भरें ताकि आपकी उत्तरपुस्तिका और मेरिट रैंक सत्यापित की जा सके।</p>
+        </div>
+
+        <form id="candidateLoginForm" onsubmit="handleCandidateLogin(event)">
+            <div class="form-group">
+                <label class="field-label" for="studentName"><span>Candidate Full Name / छात्र का नाम</span><span class="required-dot">*</span></label>
+                <div class="input-box-wrap">
+                    <span class="input-icon-lead">👤</span>
+                    <input type="text" id="studentName" class="field-input" placeholder="e.g. Rahul Kumar" required autocomplete="name" autofocus oninput="formatNameField(this)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="rollNo"><span>Examination Roll Number / अनुक्रमांक</span><span class="required-dot">*</span></label>
+                <div class="input-box-wrap">
+                    <span class="input-icon-lead">🏷️</span>
+                    <input type="text" id="rollNo" class="field-input mono-field" placeholder="e.g. GTC-101 or 32" required autocomplete="off" maxlength="16" oninput="formatRollField(this)">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="className"><span>Class or Standard / कक्षा</span><span class="required-dot">*</span></label>
+                <div class="select-wrapper">
+                    <span class="input-icon-lead">🏫</span>
+                    <select id="className" class="field-select" required>
+                        <option value="" disabled selected>-- Click to Choose Class / कक्षा चुनें --</option>
+                        <option value="Class 2">Class 2 (दूसरी कक्षा)</option>
+                        <option value="Class 3">Class 3 (तीसरी कक्षा)</option>
+                        <option value="Class 4">Class 4 (चौथी कक्षा)</option>
+                        <option value="Class 5">Class 5 (पांचवीं कक्षा)</option>
+                        <option value="Class 6">Class 6 (छठी कक्षा)</option>
+                        <option value="Class 7">Class 7 (सातवीं कक्षा)</option>
+                        <option value="Class 8">Class 8 (आठवीं कक्षा)</option>
+                        <option value="Class 9">Class 9 (नौवीं कक्षा)</option>
+                        <option value="Class 10">Class 10 (दसवीं कक्षा)</option>
+                    </select>
+                    <span class="select-chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="field-label" for="examLang"><span>Paper Language / प्रश्न-पत्र की भाषा</span><span class="required-dot">*</span></label>
+                <div class="select-wrapper">
+                    <span class="input-icon-lead">🌐</span>
+                    <select id="examLang" class="field-select" required>
+                        <option value="" disabled selected>-- Click to Choose Language / भाषा चुनें --</option>
+                        <option value="hi">🇮🇳 हिन्दी माध्यम (Hindi Medium)</option>
+                        <option value="en">🇬🇧 English Medium (अंग्रेज़ी माध्यम)</option>
+                    </select>
+                    <span class="select-chevron">▼</span>
+                </div>
+            </div>
+
+            <div class="honor-code-box" onclick="toggleHonorCodeCheckbox()">
+                <input type="checkbox" id="honorCheck" required onclick="event.stopPropagation()">
+                <div class="honor-code-text"><strong>सत्यनिष्ठा शपथ (Honor Code):</strong> मैं घोषणा करता/करती हूँ कि मैं यह परीक्षा पूर्ण ईमानदारी से दूंगा और स्क्रीन बदलने जैसी संदिग्ध गतिविधि नहीं करूंगा।</div>
+            </div>
+
+            <button type="submit" id="loginBtn" class="btn-launch-room">
+                <span>Enter Examination Room</span>
+                <span style="font-size: 18px;">🚀</span>
+            </button>
+        </form>
+
+        <div class="card-footer-nav">
+            <a href="auth.html" class="nav-link"><span>←</span><span>Change Access Code</span></a>
+            <div class="security-flag-badge"><span>🛡️</span><span>Anti-Cheat Proctor Active</span></div>
+        </div>
+    </main>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-crest-icon" style="background: var(--primary-soft); border: 1.5px solid var(--primary-border); color: var(--primary);">📝</div>
+            <h3 class="modal-title">Verify Your Information</h3>
+            <p class="modal-desc">कृपया अपने विवरण की पुनः जांच कर लें। एक बार टेस्ट शुरू होने के पश्चात जानकारी बदली नहीं जा सकती।</p>
+            <div class="confirm-table-card">
+                <div class="confirm-row"><span class="confirm-label">Student Name:</span><span class="confirm-val" id="confName">--</span></div>
+                <div class="confirm-row"><span class="confirm-label">Roll Number:</span><span class="confirm-val" id="confRoll" style="color: var(--primary);">--</span></div>
+                <div class="confirm-row"><span class="confirm-label">Class / Standard:</span><span class="confirm-val" id="confClass">--</span></div>
+                <div class="confirm-row"><span class="confirm-label">Paper Language:</span><span class="confirm-val" id="confLang">--</span></div>
+            </div>
+            <div class="modal-btn-row">
+                <button type="button" class="btn-modal-action" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff;" onclick="proceedToExamRoom()">Start Examination 🚀</button>
+                <button type="button" class="btn-modal-action" style="background: #e2e8f0; color: #334155;" onclick="closeConfirmModal()">Edit Info ✏️</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teacher Authorization Modal -->
+    <div id="adminBypassModal" class="modal-overlay">
+        <div class="modal-box">
+            <div style="font-size: 34px; margin-bottom: 10px;">🛡️</div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 900; text-transform: uppercase; margin-bottom: 6px;">Teacher Authorization</h3>
+            <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 16px; font-weight: 600;">परीक्षा विंडो अनलॉक करने हेतु शिक्षक का मास्टर पासवर्ड दर्ज करें:</p>
+            <input type="password" id="adminPassInput" placeholder="ENTER MASTER PASSCODE" class="modal-pass-input" autocomplete="off" oninput="this.value = this.value.toUpperCase()">
+            <div id="adminErr" class="modal-err-msg">❌ अमान्य पासवर्ड! कृपया सही कोड दर्ज करें।</div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button type="button" class="btn-launch-room" style="min-height: 44px; font-size: 13px;" onclick="verifyAdminAccess()">Unlock & Proceed 🚀</button>
+                <button type="button" class="btn-launch-room" style="background: #e2e8f0; color: #334155; min-height: 44px; box-shadow: none;" onclick="closeAdminModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingOverlay">
+        <div class="spinner-disc"></div>
+        <div id="loadingText">Connecting to examination server... ⏳</div>
+    </div>
+
+    <script>
+        const LOGIN_ENGINE_CONFIG = {
+            scriptUrl: "https://script.google.com/macros/s/AKfycbzQysEVoQmSS6w_cEeLYK1g95T16cUT5taIdjXfdDLUsOggqFnVMU5GDrl3C3c-Olvt/exec",
+            masterKeys: ["GK9890"],
+            examRoomPage: "test.html"
+        };
+
+        let pendingCandidateData = null;
+
+        function isUnlockedBySchedule() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Sunday
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            // Sunday between 8:00 AM (8,0) and 11:59 AM (11,59)
+            const isSundayMorning = (day === 0 && (hour > 8 || (hour === 8 && minute >= 0)) && hour < 12);
+            return isSundayMorning;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAllowed = isUnlockedBySchedule() || sessionStorage.getItem("adminUnlockedAll") === "true";
+            if (!isAllowed) {
+                document.getElementById("loginCard").style.display = "none";
+                document.getElementById("lockedScreenNotice").style.display = "block";
+            }
+        });
+
+        function openAdminModal() {
+            document.getElementById("adminErr").style.display = "none";
+            document.getElementById("adminPassInput").value = "";
+            document.getElementById("adminBypassModal").style.display = "flex";
+            setTimeout(() => document.getElementById("adminPassInput").focus(), 150);
+        }
+
+        function closeAdminModal() {
+            document.getElementById("adminBypassModal").style.display = "none";
+        }
+
+        function verifyAdminAccess() {
+            const entered = document.getElementById("adminPassInput").value.trim().toUpperCase();
+            if (LOGIN_ENGINE_CONFIG.masterKeys.includes(entered)) {
+                sessionStorage.setItem("adminUnlockedAll", "true");
+                closeAdminModal();
+                document.getElementById("lockedScreenNotice").style.display = "none";
+                document.getElementById("loginCard").style.display = "block";
+                showToast("✅ Authorization Confirmed! Portal Unlocked.");
+            } else {
+                document.getElementById("adminErr").style.display = "block";
+            }
+        }
+
+        function handleCandidateLogin(event) {
+            event.preventDefault();
+            const nameVal = document.getElementById("studentName").value.trim();
+            const rollVal = document.getElementById("rollNo").value.trim().toUpperCase();
+            const classVal = document.getElementById("className").value.trim();
+            const langVal = document.getElementById("examLang").value.trim();
+
+            if (!nameVal || !rollVal || !classVal || !langVal) {
+                showToast("⚠️ कृपया सभी अनिवार्य फ़ील्ड भरें!");
+                return;
+            }
+
+            pendingCandidateData = { name: nameVal, roll: rollVal, className: classVal, lang: langVal };
+            openConfirmationModal(pendingCandidateData);
+        }
+
+        function openConfirmationModal(data) {
+            document.getElementById("confName").textContent = data.name;
+            document.getElementById("confRoll").textContent = data.roll;
+            document.getElementById("confClass").textContent = data.className;
+            document.getElementById("confLang").textContent = (data.lang === "hi") ? "हिन्दी (Hindi)" : "English (अंग्रेज़ी)";
+            document.getElementById("confirmModal").style.display = "flex";
+        }
+
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").style.display = "none";
+        }
+
+        function proceedToExamRoom() {
+            closeConfirmModal();
+            if (!pendingCandidateData) return;
+
+            try {
+                localStorage.setItem("name", pendingCandidateData.name);
+                localStorage.setItem("roll", pendingCandidateData.roll);
+                localStorage.setItem("class", pendingCandidateData.className);
+                localStorage.setItem("lang", pendingCandidateData.lang);
+                sessionStorage.setItem("activeCandidateRoll", pendingCandidateData.roll);
+            } catch (e) {}
+
+            toggleLoading(true, "Launching Examination Room... 🚀");
+            setTimeout(() => {
+                window.location.replace(LOGIN_ENGINE_CONFIG.examRoomPage);
+            }, 350);
+        }
+
+        function toggleLoading(show, msg) {
+            const ol = document.getElementById("loadingOverlay");
+            const txt = document.getElementById("loadingText");
+            if (ol) ol.style.display = show ? "flex" : "none";
+            if (txt && msg) txt.textContent = msg;
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("loginToast");
+            if (t) {
+                t.textContent = msg;
+                t.style.display = "block";
+                setTimeout(() => { t.style.display = "none"; }, 3200);
+            }
+        }
+
+        function formatNameField(input) { input.value = input.value.replace(/[^a-zA-Z\s\.]/g, ''); }
+        function formatRollField(input) { input.value = input.value.replace(/[^a-zA-Z0-9\-#_]/g, '').toUpperCase(); }
+        function toggleHonorCodeCheckbox() { const chk = document.getElementById("honorCheck"); if (chk) chk.checked = !chk.checked; }
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 🛡️ STRICT SESSION & PRE-FLIGHT GUARD -->
+    <script>
+        (function() {
+            var isBlobEnv = window.location.protocol === "blob:" || window.location.href.startsWith("blob:");
+            if (!isBlobEnv) {
+                var authPassed = localStorage.getItem("authPassed") === "true";
+                var sessionValid = sessionStorage.getItem("activeSession") === "valid";
+                if (!authPassed || !sessionValid) {
+                    try {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.replace("index.html");
+                    } catch (e) {
+                        window.location.href = "index.html";
+                    }
+                }
+            } else {
+                if (!localStorage.getItem("name")) localStorage.setItem("name", "Demo Candidate");
+                if (!localStorage.getItem("roll")) localStorage.setItem("roll", "GTC-101");
+                if (!localStorage.getItem("class")) localStorage.setItem("class", "8th Standard");
+                if (!localStorage.getItem("lang")) localStorage.setItem("lang", "hi");
+            }
+        })();
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0284c7">
+    <title>Live Examination Room | Gautam Teaching Centre</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Mukta:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="test.css?v=9.0" onerror="this.onerror=null;this.href='css/test.css';">
+</head>
+
+<body>
+
+    <div id="cbtToast">Security notice</div>
+
+    <!-- ⏳ Anti-Hang Loading Screen Overlay -->
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <div id="loadingText">Connecting to examination server... ⏳</div>
+    </div>
+
+    <!-- 🔒 24-Hour Re-Test Authorization Modal (Passcode: GK9890) -->
+    <div id="retestAuthModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 99997; justify-content: center; align-items: center; padding: 18px;">
+        <div class="modal-glass" style="border-top: 4.5px solid var(--warning);">
+            <div style="width: 58px; height: 58px; background: #fffbeb; border: 1.5px solid #fde68a; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 28px; color: #d97706;">
+                🔒
+            </div>
+            <h2 style="color: #0f172a; font-family: 'Outfit', sans-serif; font-size: 19px; margin-bottom: 8px; font-weight: 900; text-transform: uppercase;">
+                24-Hour Device Lock Active
+            </h2>
+            <p id="retestModalDesc" style="color: #475569; font-size: 13px; margin-bottom: 16px; line-height: 1.55; font-weight: 600;">
+                इस रोल नंबर द्वारा पिछले 24 घंटे में टेस्ट सबमिट किया जा चुका है। दोबारा टेस्ट देने हेतु शिक्षक का मास्टर पासवर्ड दर्ज करें:
+            </p>
+            <div style="margin-bottom: 14px;">
+                <input 
+                    type="password" 
+                    id="adminPasscodeField" 
+                    placeholder="ENTER MASTER PASSCODE" 
+                    autocomplete="off" 
+                    class="passcode-input" 
+                    oninput="this.value = this.value.toUpperCase()">
+                <p id="retestPassError" style="color: #ef4444; font-size: 12px; margin-top: 6px; font-weight: 700; display: none;">❌ अमान्य पासवर्ड! केवल शिक्षक का सही कोड दर्ज करें।</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="verifyRetestPasscode()" style="flex: 1; background: linear-gradient(135deg, #0284c7, #2563eb); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 13px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);">
+                    Authorize & Start 🚀
+                </button>
+                <button type="button" onclick="cancelRetestExit()" style="background: #e2e8f0; color: #334155; border: 1px solid #cbd5e1; padding: 12px 16px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;">
+                    Exit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 📢 Custom Warning Dialog Modal (15 Warnings) -->
+    <div id="customDialogModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.76); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 100000; justify-content: center; align-items: center; padding: 20px;">
+        <div class="modal-glass" style="max-width: 420px; padding: 26px 20px;">
+            <div id="customDialogIcon" style="font-size: 36px; margin-bottom: 10px;">⚠️</div>
+            <h3 id="customDialogTitle" style="color: #0f172a; font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 900; margin-bottom: 8px; text-transform: uppercase;">Notice</h3>
+            <p id="customDialogMsg" style="color: #334155; font-size: 13.5px; margin-bottom: 20px; line-height: 1.55; font-weight: 600;"></p>
+            <div id="customDialogActions" style="display: flex; gap: 10px; justify-content: center;">
+                <button type="button" id="customDialogOkBtn" style="background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; border: none; padding: 11px 26px; border-radius: 12px; font-weight: 800; font-size: 13.5px; cursor: pointer; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);">
+                    Confirm / ठीक है
+                </button>
+                <button type="button" id="customDialogCancelBtn" style="display: none; background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; padding: 11px 20px; border-radius: 12px; font-weight: 700; font-size: 13.5px; cursor: pointer;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🌟 RAILWAY EXAM STANDARD SUCCESS MODAL -->
+    <div id="premiumSuccessModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 99999; justify-content: center; align-items: center; padding: 20px;">
+        <div class="modal-glass" style="max-width: 460px; padding: 36px 24px; text-align: center;">
+            <div style="width: 68px; height: 68px; background: #ecfdf5; border: 2px solid #10b981; border-radius: 22px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 34px; color: #10b981; box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.35);">
+                ✓
+            </div>
+
+            <h2 style="color: #0f172a; font-family: 'Outfit', sans-serif; font-size: 21px; margin-bottom: 10px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase;">
+                Test Submitted Successfully! 🎉
+            </h2>
+            
+            <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 14px; margin-bottom: 20px; text-align: left;">
+                <p style="color: #059669; font-size: 13px; font-weight: 800; margin-bottom: 6px;">
+                    ✅ आपके उत्तर Google Sheet क्लाउड डेटाबेस पर सुरक्षित दर्ज हो चुके हैं।
+                </p>
+                <p style="color: #64748b; font-size: 12px; line-height: 1.55; font-weight: 600;">
+                    <b>रेलवे परीक्षा नियमानुसार:</b> आधिकारिक आंसर-की (Response Sheet) और मेरिट लिस्ट रविवार दोपहर 12:00 बजे घोषित की जाएगी।
+                </p>
+            </div>
+
+            <button type="button" onclick="exitToPortalHome()" style="width: 100%; background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.45);">
+                Exit to Portal Home / वापस जाएं 🏠
+            </button>
+        </div>
+    </div>
+
+    <!-- 📱 MAIN CBT EXAMINATION ROOM -->
+    <main class="exam-container" id="examMainBox">
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <h2>
+                    <span>🎓</span>
+                    <span>GAUTAM TEACHING CENTRE</span>
+                </h2>
+                <div class="candidate-live-badge">
+                    <span>👨‍🎓</span>
+                    <span id="candidateLiveInfo">Candidate Loading...</span>
+                </div>
+            </div>
+            
+            <div class="top-bar-right">
+                <div class="lang-switch-badge">
+                    <span style="font-size: 13px;">🌐</span>
+                    <select id="examLangSelect" class="lang-switch-select" onchange="changeQuestionLanguage(this.value)">
+                        <option value="hi">🇮🇳 हिन्दी</option>
+                        <option value="en">🇬🇧 English</option>
+                    </select>
+                </div>
+                <div id="timer">⏱ Time Left : 60:00</div>
+            </div>
+        </header>
+
+        <!-- 🔢 HORIZONTAL QUESTION PALETTE -->
+        <section class="palette-strip-container">
+            <div class="palette-strip-header">
+                <span class="palette-strip-title">
+                    <span>📋</span>
+                    <span>Question Palette (1 - <span id="paletteTotalCount">40</span>)</span>
+                </span>
+                
+                <div class="pad-legend-horizontal">
+                    <div class="legend-item">
+                        <div class="legend-indicator legend-answered"></div>
+                        <span>Answered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-indicator legend-unanswered"></div>
+                        <span>Unanswered</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-indicator legend-review"></div>
+                        <span>Review</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-indicator legend-current"></div>
+                        <span>Current</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="questionList" class="horizontal-pad-scroll"></div>
+        </section>
+
+        <!-- Active Question Box -->
+        <div class="main-layout">
+            <section class="question-side">
+                <div class="question-box">
+                    <div class="question-meta-strip">
+                        <h3>
+                            <span>Question</span>
+                            <span id="qno" style="color: var(--primary);">1</span>
+                            <span>of</span>
+                            <span id="totalQuestionsCount">40</span>
+                            <span id="questionTopicBadge" style="font-size: 11px; background: var(--surface-muted); color: var(--text-muted); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--border-light); margin-left: 6px;">Topic: General</span>
+                        </h3>
+                        <div class="marking-pill">
+                            <span class="marking-pos">+2.00</span>
+                            <span>•</span>
+                            <span class="marking-neg">-0.25</span>
+                        </div>
+                    </div>
+
+                    <p id="question">Question loading from js/questions.js...</p>
+
+                    <div class="options" id="optionsWrapper">
+                        <label class="option-container" onclick="handleOptionSelect(0)">
+                            <input type="radio" name="answer" value="0">
+                            <span id="op1">Option A</span>
+                        </label>
+                        <label class="option-container" onclick="handleOptionSelect(1)">
+                            <input type="radio" name="answer" value="1">
+                            <span id="op2">Option B</span>
+                        </label>
+                        <label class="option-container" onclick="handleOptionSelect(2)">
+                            <input type="radio" name="answer" value="2">
+                            <span id="op3">Option C</span>
+                        </label>
+                        <label class="option-container" onclick="handleOptionSelect(3)">
+                            <input type="radio" name="answer" value="3">
+                            <span id="op4">Option D</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <button id="prevBtn" type="button" class="btn-nav" onclick="prevQuestion()">
+                        <span>← Previous</span>
+                    </button>
+                    <button id="clearBtn" type="button" class="btn-clear" onclick="clearSelectedResponse()">
+                        <span>Clear</span>
+                    </button>
+                    <button id="reviewBtn" type="button" class="btn-review" onclick="toggleReviewQuestion()">
+                        <span>⭐ Mark Review</span>
+                    </button>
+                    <button id="nextBtn" type="button" class="btn-nav" onclick="nextQuestion()">
+                        <span>Next →</span>
+                    </button>
+                    <button id="submitBtn" type="button" class="btn-submit" style="display: none;" onclick="confirmSubmitTest()">
+                        <span>Submit Test 🚀</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/questions.js"></script>
+    <script src="js/test.js"></script>
+</body>
+</html>
